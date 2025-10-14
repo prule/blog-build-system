@@ -1,19 +1,23 @@
 import { cpSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
-import { join, extname, basename } from 'path';
+import { join, basename } from 'path';
 import * as showdown from 'showdown';
+import asciidoctor, {Asciidoctor} from "asciidoctor";
 
 export class ContentProcessor {
     private readonly path: string;
     private readonly dist: string;
+    private readonly asciidoctor: Asciidoctor;
 
     constructor(path: string, dist: string) {
         this.path = path;
         this.dist = dist;
+        this.asciidoctor = asciidoctor();
     }
 
     run() {
         this.copy();
-        this.transformArticles();
+        this.transformArticlesMarkdown();
+        this.transformArticlesAsciiDoctor();
     }
 
     /**
@@ -26,22 +30,38 @@ export class ContentProcessor {
     }
 
     /**
-     * Transforms all ReadMe.md files in the dist folder to HTML files called index.html
+     * Transforms all ReadMe.md files in the dist folder to HTML files called ReadMe.html
      */
-    transformArticles() {
-        console.log('Transforming articles...');
+    transformArticlesMarkdown() {
+        console.log('Transforming Markdown articles...');
         const converter = new showdown.Converter();
         this.findAndTransform(this.dist, file => {
             if (basename(file) === 'ReadMe.md') {
                 console.log(`Transforming ${file}`);
                 const content = readFileSync(file, 'utf-8');
                 const html = converter.makeHtml(content);
-                const newPath = join(file, '..', 'index.html');
+                const newPath = join(file, '..', 'ReadMe.html');
                 writeFileSync(newPath, html);
-                unlinkSync(file);
             }
         });
-        console.log('Transformation complete.');
+        console.log('Markdown transformation complete.');
+    }
+
+    /**
+     * Transforms all ReadMe.adoc files in the dist folder to HTML files called ReadMe.html
+     */
+    transformArticlesAsciiDoctor() {
+        console.log('Transforming AsciiDoc articles...');
+        this.findAndTransform(this.dist, file => {
+            if (basename(file) === 'ReadMe.adoc') {
+                console.log(`Transforming ${file}`);
+                const content = readFileSync(file, 'utf-8');
+                const html = this.asciidoctor.convert(content);
+                const newPath = join(file, '..', 'ReadMe.html');
+                writeFileSync(newPath, html as string);
+            }
+        });
+        console.log('AsciiDoc transformation complete.');
     }
 
     private findAndTransform(dir: string, callback: (file: string) => void) {
