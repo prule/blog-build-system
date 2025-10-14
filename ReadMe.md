@@ -5,5 +5,5 @@ npm run build
 ```
 
 ```shell
-node dist/index.js --base-dir=./site
+node dist/index.js --base=../site
 ```

@@ -1,29 +1,41 @@
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { ContentProcessor } from './content';
 
-// Define the shape of our build configuration
+/**
+ * Build configuration looks like this:
+ * {
+ *   "content": "./content",
+ *   "theme": "./theme",
+ *   "dist": "./dist"
+ * }
+ */
 interface BuildConfiguration {
-    posts: string;
-    output: string;
+    content: string;
+    theme: string;
+    dist: string;
 }
 
 console.log('Build configuration');
 
 // Set up yargs to parse command-line arguments
 const argv = yargs(hideBin(process.argv))
-    .option('base-dir', {
+    .option('base', {
         alias: 'b',
         type: 'string',
-        description: 'Base directory for the build',
+        description: 'Base directory for the site configuration',
         default: process.cwd(),
     })
     .parseSync();
 
 try {
+    const baseDir = resolve(argv['base'] as string);
+    console.log('Using base directory:', baseDir);
+
     // Construct the absolute path to the configuration file
-    const configPath = join(argv['base-dir'], 'build-configuration.json');
+    const configPath = join(baseDir, 'build-configuration.json');
 
     // Read the file's contents into a string
     const configFile = readFileSync(configPath, 'utf-8');
@@ -32,6 +44,13 @@ try {
     const config: BuildConfiguration = JSON.parse(configFile);
 
     console.log('Successfully loaded configuration:', config);
+
+    // Process content
+    const contentProcessor = new ContentProcessor(
+        join(baseDir, config.content),
+        join(baseDir, config.dist)
+    );
+    contentProcessor.run();
 } catch (error) {
     console.error('Error reading or parsing build-configuration.json:', error);
     process.exit(1); // Exit with an error code
