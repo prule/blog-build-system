@@ -3,6 +3,7 @@ import { join, resolve } from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { ContentProcessor } from './content';
+import {ThemeProcessor} from "./theme";
 
 /**
  * Build configuration looks like this:
@@ -51,6 +52,12 @@ try {
         join(baseDir, config.dist)
     );
     contentProcessor.run();
+
+    const themeProcessor = new ThemeProcessor(
+        join(baseDir, config.theme),
+        join(baseDir, config.dist)
+    )
+    themeProcessor.processArticles()
 } catch (error) {
     console.error('Error reading or parsing build-configuration.json:', error);
     process.exit(1); // Exit with an error code
