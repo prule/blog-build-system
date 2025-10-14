@@ -1,4 +1,6 @@
-import { cpSync } from 'fs';
+import { cpSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
+import { join, extname, basename } from 'path';
+import * as showdown from 'showdown';
 
 export class ContentProcessor {
     private readonly path: string;
@@ -10,8 +12,8 @@ export class ContentProcessor {
     }
 
     run() {
-        this.copy()
-        this.transformArticles()
+        this.copy();
+        this.transformArticles();
     }
 
     /**
@@ -27,6 +29,30 @@ export class ContentProcessor {
      * Transforms all ReadMe.md files in the dist folder to HTML files called index.html
      */
     transformArticles() {
+        console.log('Transforming articles...');
+        const converter = new showdown.Converter();
+        this.findAndTransform(this.dist, file => {
+            if (basename(file) === 'ReadMe.md') {
+                console.log(`Transforming ${file}`);
+                const content = readFileSync(file, 'utf-8');
+                const html = converter.makeHtml(content);
+                const newPath = join(file, '..', 'index.html');
+                writeFileSync(newPath, html);
+                unlinkSync(file);
+            }
+        });
+        console.log('Transformation complete.');
+    }
 
+    private findAndTransform(dir: string, callback: (file: string) => void) {
+        const files = readdirSync(dir);
+        for (const file of files) {
+            const fullPath = join(dir, file);
+            if (statSync(fullPath).isDirectory()) {
+                this.findAndTransform(fullPath, callback);
+            } else {
+                callback(fullPath);
+            }
+        }
     }
 }
