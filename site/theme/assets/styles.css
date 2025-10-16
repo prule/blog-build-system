@@ -757,3 +757,18 @@ footer::before {
         text-align: left;
     }
 }
+
+/* Blockquote Styling */
+blockquote {
+    border-left: 4px solid var(--accent-color);
+    margin: 1.5em 0;
+    padding: 0.5em 1.5em;
+    background-color: var(--background-color);
+    font-style: italic;
+    color: var(--text-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+blockquote p {
+    margin: 0;
+}
