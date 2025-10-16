@@ -1,5 +1,5 @@
 import { cpSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
-import { join, basename } from 'path';
+import { join, basename, dirname } from 'path';
 import * as showdown from 'showdown';
 import asciidoctor, {Asciidoctor} from "asciidoctor";
 
@@ -42,6 +42,7 @@ export class ContentProcessor {
                 const html = converter.makeHtml(content);
                 const newPath = join(file, '..', 'ReadMe.html');
                 writeFileSync(newPath, html);
+                unlinkSync(file);
             }
         });
         console.log('Markdown transformation complete.');
@@ -56,9 +57,14 @@ export class ContentProcessor {
             if (basename(file) === 'ReadMe.adoc') {
                 console.log(`Transforming ${file}`);
                 const content = readFileSync(file, 'utf-8');
-                const html = this.asciidoctor.convert(content);
+                const options = {
+                    safe: 'safe',
+                    base_dir: dirname(file)
+                };
+                const html = this.asciidoctor.convert(content, options);
                 const newPath = join(file, '..', 'ReadMe.html');
                 writeFileSync(newPath, html as string);
+                unlinkSync(file);
             }
         });
         console.log('AsciiDoc transformation complete.');
