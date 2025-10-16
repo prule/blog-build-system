@@ -772,3 +772,38 @@ blockquote {
 blockquote p {
     margin: 0;
 }
+
+/* Article Image Styling */
+.article-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: transform 0.3s ease;
+}
+
+.article-body img:hover {
+    transform: scale(1.02);
+}
+
+.article-body figure {
+    margin: 2rem 0;
+    padding: 0;
+}
+
+.article-body figure img {
+    margin-bottom: 0.75rem;
+}
+
+.article-body figcaption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+body.dark-mode .article-body figcaption {
+    color: rgba(255, 255, 255, 0.6);
+}
