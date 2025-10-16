@@ -131,6 +131,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            hljs.registerAliases('json5', { languageName: 'typescript' });
             hljs.highlightAll();
             hljs.initLineNumbersOnLoad();
             hljs.initLangOnLoad();
