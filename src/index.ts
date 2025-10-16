@@ -31,10 +31,7 @@ const argv = yargs(hideBin(process.argv))
     })
     .parseSync();
 
-try {
-    const baseDir = resolve(argv['base'] as string);
-    console.log('Using base directory:', baseDir);
-
+function loadBuildConfiguration(baseDir: string) {
     // Construct the absolute path to the configuration file
     const configPath = join(baseDir, 'build-configuration.json');
 
@@ -43,19 +40,40 @@ try {
 
     // Parse the JSON string into a JavaScript object with our defined type
     const config: BuildConfiguration = JSON.parse(configFile);
+    return config;
+}
 
-    console.log('Successfully loaded configuration:', config);
+function loadSiteConfiguration(baseDir: string) {
+    // Construct the absolute path to the configuration file
+    const configPath = join(baseDir, 'site.json');
+
+    // Read the file's contents into a string
+    const configFile = readFileSync(configPath, 'utf-8');
+
+    // Parse the JSON string into a JavaScript object with our defined type
+    const config: SiteConfiguration = JSON.parse(configFile);
+    return config;
+}
+
+try {
+    const baseDir = resolve(argv['base'] as string);
+    console.log('Using base directory:', baseDir);
+    const buildConfiguration = loadBuildConfiguration(baseDir);
+    const siteConfiguration = loadSiteConfiguration(baseDir);
+
+    console.log('Successfully loaded configuration:', buildConfiguration);
 
     // Process content
     const contentProcessor = new ContentProcessor(
-        join(baseDir, config.content),
-        join(baseDir, config.dist)
+        join(baseDir, buildConfiguration.content),
+        join(baseDir, buildConfiguration.dist)
     );
     contentProcessor.run();
 
     const themeProcessor = new ThemeProcessor(
-        join(baseDir, config.theme),
-        join(baseDir, config.dist)
+        join(baseDir, buildConfiguration.theme),
+        join(baseDir, buildConfiguration.dist),
+        siteConfiguration
     )
     themeProcessor.processArticles()
 } catch (error) {

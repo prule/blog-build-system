@@ -1,5 +1,6 @@
 import { readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { join, dirname } from 'path';
+import * as Mustache from 'mustache';
 
 interface Metadata {
     title: string;
@@ -13,10 +14,12 @@ interface Metadata {
 export class ThemeProcessor {
     private readonly theme: string;
     private readonly dist: string;
+    private readonly siteConfiguration: SiteConfiguration;
 
-    constructor(theme: string, dist: string) {
+    constructor(theme: string, dist: string, siteConfiguration: SiteConfiguration) {
         this.theme = theme;
         this.dist = dist;
+        this.siteConfiguration = siteConfiguration;
     }
 
     /**
@@ -24,6 +27,7 @@ export class ThemeProcessor {
      * Then, it loads the metadata.json beside it.
      * These values and the content of the ReadMe.html file are
      * then injected into the article template file to produce index.html.
+     * It does not delete any files, but leaves them there for reference.
      */
     processArticles() {
         console.log('Theming articles...');
@@ -37,16 +41,18 @@ export class ThemeProcessor {
                     const metadata: Metadata = JSON.parse(readFileSync(metadataPath, 'utf-8'));
                     const articleContent = readFileSync(file, 'utf-8');
 
-                    console.log(`Theming ${metadata.title}`);
 
-                    const output = articleTemplate
-                        .replace(/{{ARTICLE_TITLE}}/g, metadata.title)
-                        .replace(/{{subTitle}}/g, metadata.subTitle)
-                        .replace(/{{ARTICLE_DATE}}/g, new Date(metadata.date).toDateString())
-                        .replace(/{{modifiedDate}}/g, new Date(metadata.modifiedDate).toDateString())
-                        .replace(/{{series}}/g, metadata.series)
-                        .replace(/{{TAGS}}/g, metadata.tags.join(', '))
-                        .replace(/{{ARTICLE_CONTENT}}/g, articleContent);
+                    const view = {
+                        meta: metadata,
+                        site: this.siteConfiguration,
+                        date: new Date(metadata.date).toDateString(),
+                        modifiedDate: new Date(metadata.modifiedDate).toDateString(),
+                        content: articleContent
+                    };
+                    console.log(`Theming ${view.meta.title}`);
+
+                    // console.log(JSON.stringify(view));
+                    const output = Mustache.render(articleTemplate, view);
 
                     const newPath = join(dirname(file), 'index.html');
                     writeFileSync(newPath, output);
