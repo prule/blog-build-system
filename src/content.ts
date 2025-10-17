@@ -10,6 +10,7 @@ interface Metadata {
     modifiedDate: string;
     series: string;
     tags: string[];
+    image?: string;
 }
 
 interface ArticleIndexData {
@@ -18,6 +19,7 @@ interface ArticleIndexData {
     modifiedDate: string;
     tags: string[];
     path: string;
+    image?: string;
 }
 
 export class ContentProcessor {
@@ -84,7 +86,8 @@ export class ContentProcessor {
                         modifiedDate: metadata.modifiedDate,
                         tags: metadata.tags,
                         summary: summary,
-                        path: articlePath
+                        path: articlePath,
+                        image: metadata.image
                     });
                 } catch (error) {
                     console.error(`Error processing metadata for ${file}:`, error);

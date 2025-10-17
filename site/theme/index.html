@@ -18,6 +18,11 @@
                 {{#articles}}
                 <article class="article">
                     <a href="{{path}}" class="article-link-wrapper">
+                        {{#image}}
+                        <div class="article-image-container">
+                            <img src="{{image}}" alt="{{title}}" class="article-image">
+                        </div>
+                        {{/image}}
                         <div class="article-summary">
                             <h3>{{title}}</h3>
                             <p class="article-meta">{{modifiedDate}}</p>
