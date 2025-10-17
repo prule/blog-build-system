@@ -808,12 +808,57 @@ body.dark-mode .article-body figcaption {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.listingblock .title {
-    font-style:     italic;
-    text-align: center;
+/* Code Block Styling */
+pre {
+    position: relative;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    /* Make space for language indicator */
+    padding: 1em 1.5em 1.5em;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    overflow-x: auto;
 }
 
-pre .hljs-lang {
-    font-size: 0.8em;
-    background-color: lightgray;
+pre code.hljs {
+    font-size: 0.9em;
+    padding: 0;
+    background: transparent;
+}
+
+.hljs-lang {
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0 0 4px 4px;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: auto;
+    text-align: left;
+}
+
+body.dark-mode .hljs-lang {
+    background-color: #2c3e50;
+    color: var(--footer-text);
+}
+
+.listingblock .title {
+    font-style: italic;
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: -1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-mode .listingblock .title {
+    color: rgba(255, 255, 255, 0.6);
 }

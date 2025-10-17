@@ -1,4 +1,3 @@
-# Sharing gradle configuration between modules
 
 > Source code for this project is available at https://github.com/prule/gradle-sample
 
@@ -12,12 +11,13 @@ Previously I would have used the `allprojects` or `subprojects` block to do this
 ## Setting up a multi-module project
 
 Install the latest version of gradle using [sdkman](https://sdkman.io):
-```commandline
-> gradle-sample % sdk install gradle  
+```shell
+gradle-sample % sdk install gradle
+...  
 ```
 
 At time of writing this, the latest version of gradle is 8.12.1
-```commandline
+```shell
 > gradle-sample % gradle -v
 
 ------------------------------------------------------------
@@ -36,7 +36,7 @@ OS:            Mac OS X 15.2 aarch64
 ```
 
 Lets create a new project using `gradle init`:
-```commandline
+```shell
 > IdeaProjects % mkdir gradle-sample
 > IdeaProjects % cd gradle-sample
 > gradle-sample % gradle init
@@ -82,25 +82,19 @@ BUILD SUCCESSFUL in 33s
 ```
 
 Set up sdkman:
-```commandline
+```shell
 > gradle-sample % sdk env init
 .sdkmanrc created.
-```
-
-Add a renovate configuration:
-```commandline
-renovate.json5
 ```
 
 ### Project structure
 
 Lets look at the project structure:
-```commandline
+```shell
 > gradle-sample % tree .
 .
 ├── .sdkmanrc
 ├── .gitignore
-├── renovate.json5
 ├── app
 │   ├── build.gradle.kts
 │   └── src
@@ -195,7 +189,7 @@ Here I've opted to create an Application with libraries project - we've got:
         1. which uses `buildlogic.kotlin-common-conventions`
 
 
-```commandline
+```text
 app
 └── utilities
   └── list
