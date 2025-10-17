@@ -1,0 +1,18 @@
+<footer>
+    <div class="footer-content">
+        <div class="social-links">
+             {{SOCIAL_LINKS}}
+        </div>
+        <p>&copy; {{CURRENT_YEAR}} {{SITE_TITLE}}</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        hljs.registerAliases('json5', { languageName: 'typescript' });
+        hljs.highlightAll();
+        hljs.initLineNumbersOnLoad();
+        hljs.initLangOnLoad();
+    });
+</script>
+<script src="/assets/theme.js" ></script>

@@ -50,6 +50,17 @@ export class ThemeProcessor {
         const articleTemplatePath = join(this.theme, 'article.html');
         const articleTemplate = readFileSync(articleTemplatePath, 'utf-8');
 
+        const headerTemplatePath = join(this.theme, 'header.html');
+        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
+
+        const footerTemplatePath = join(this.theme, 'footer.html');
+        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
+
+        const partials = {
+            header: headerTemplate,
+            footer: footerTemplate
+        };
+
         this.findAndProcess(join(this.dist, 'articles'), file => {
             if (file.endsWith('ReadMe.html')) {
                 const metadataPath = join(dirname(file), 'metadata.json');
@@ -67,8 +78,7 @@ export class ThemeProcessor {
                     };
                     console.log(`Theming ${view.meta.title}`);
 
-                    // console.log(JSON.stringify(view));
-                    const output = Mustache.render(articleTemplate, view);
+                    const output = Mustache.render(articleTemplate, view, partials);
 
                     const newPath = join(dirname(file), 'index.html');
                     writeFileSync(newPath, output);
