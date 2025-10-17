@@ -1,4 +1,4 @@
-import { readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
+import { readdirSync, statSync, readFileSync, writeFileSync, cpSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import * as Mustache from 'mustache';
 
@@ -20,6 +20,22 @@ export class ThemeProcessor {
         this.theme = theme;
         this.dist = dist;
         this.siteConfiguration = siteConfiguration;
+    }
+
+    /**
+     * Copies theme/assets to dist/assets (recursively)
+     */
+    copyAssets() {
+        console.log('Copying theme assets...');
+        const source = join(this.theme, 'assets');
+        const destination = join(this.dist, 'assets');
+
+        if (existsSync(source)) {
+            cpSync(source, destination, { recursive: true });
+            console.log('Theme assets copied successfully.');
+        } else {
+            console.log('No theme assets directory found to copy.');
+        }
     }
 
     /**
