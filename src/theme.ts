@@ -11,6 +11,14 @@ interface Metadata {
     tags: string[];
 }
 
+interface ArticleIndexData {
+    title: string;
+    summary: string;
+    modifiedDate: string;
+    tags: string[];
+    path: string;
+}
+
 export class ThemeProcessor {
     private readonly theme: string;
     private readonly dist: string;
@@ -36,6 +44,59 @@ export class ThemeProcessor {
         } else {
             console.log('No theme assets directory found to copy.');
         }
+    }
+
+    /**
+     * Uses the article.json data file to pass a list of the most recent articles to the index template.
+     */
+    processHomePage() {
+        console.log('Processing home page...');
+        const articlesJsonPath = join(this.dist, 'articles.json');
+        if (!existsSync(articlesJsonPath)) {
+            console.log('articles.json not found, skipping home page processing.');
+            return;
+        }
+
+        const articles: ArticleIndexData[] = JSON.parse(readFileSync(articlesJsonPath, 'utf-8'));
+
+        // Sort articles by date and take the most recent 10
+        const recentArticles = articles
+            .sort((a, b) => new Date(b.modifiedDate).getTime() - new Date(a.modifiedDate).getTime())
+            .slice(0, 10)
+            .map(article => ({
+                ...article,
+                // Format the date for display
+                modifiedDate: new Date(article.modifiedDate).toDateString()
+            }));
+
+        const indexTemplatePath = join(this.theme, 'index.html');
+        const indexTemplate = readFileSync(indexTemplatePath, 'utf-8');
+
+        const headTemplatePath = join(this.theme, 'head.html');
+        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
+
+        const headerTemplatePath = join(this.theme, 'header.html');
+        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
+
+        const footerTemplatePath = join(this.theme, 'footer.html');
+        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
+
+        const partials = {
+            head: headTemplate,
+            header: headerTemplate,
+            footer: footerTemplate
+        };
+
+        const view = {
+            site: this.siteConfiguration,
+            articles: recentArticles
+        };
+
+        const output = Mustache.render(indexTemplate, view, partials);
+        const outputPath = join(this.dist, 'index.html');
+        writeFileSync(outputPath, output);
+
+        console.log('Home page processed successfully.');
     }
 
     /**

@@ -77,6 +77,7 @@ try {
     )
     themeProcessor.processArticles();
     themeProcessor.copyAssets();
+    themeProcessor.processHomePage();
 } catch (error) {
     console.error('Error reading or parsing build-configuration.json:', error);
     process.exit(1); // Exit with an error code
