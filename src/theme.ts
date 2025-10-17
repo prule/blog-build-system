@@ -50,6 +50,9 @@ export class ThemeProcessor {
         const articleTemplatePath = join(this.theme, 'article.html');
         const articleTemplate = readFileSync(articleTemplatePath, 'utf-8');
 
+        const headTemplatePath = join(this.theme, 'head.html');
+        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
+
         const headerTemplatePath = join(this.theme, 'header.html');
         const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
 
@@ -57,6 +60,7 @@ export class ThemeProcessor {
         const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
 
         const partials = {
+            head: headTemplate,
             header: headerTemplate,
             footer: footerTemplate
         };
