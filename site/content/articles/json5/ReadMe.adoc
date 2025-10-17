@@ -62,9 +62,11 @@ include::sample-typescript-json5.ts[]
 == How to use it
 
 You can use Json5 in your JavaScript or TypeScript code like this:
-```
+```shell
 npm install json5
+```
 
+```javascript
 import JSON5 from 'json5'
 
 const obj = JSON5.parse(json5String)
@@ -73,7 +75,7 @@ const str = JSON5.stringify(obj)
 
 To convert Json5 to Json use the cli:
 
-```
+```shell
 npm install --global json5
 json5 --out-file sample.json sample.json5
 json5 --validate sample.json5
@@ -81,7 +83,9 @@ json5 --validate sample.json5
 
 In Kotlin there is the json5k library: https://github.com/xn32/json5k
 
-```
+```kotlin
+import io.github.xn32.json5k.Json5
+
 Json5.decodeFromString<Person>("{ name: 'Carl', age: 42 }") // Person(name=Carl, age=42)
 Json5.encodeToString(Person("John", 31u)) // {name:"John",age:31}
 ```

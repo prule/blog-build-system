@@ -807,3 +807,13 @@ blockquote p {
 body.dark-mode .article-body figcaption {
     color: rgba(255, 255, 255, 0.6);
 }
+
+.listingblock .title {
+    font-style:     italic;
+    text-align: center;
+}
+
+pre .hljs-lang {
+    font-size: 0.8em;
+    background-color: lightgray;
+}
