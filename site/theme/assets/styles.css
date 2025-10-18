@@ -83,7 +83,7 @@ aside {
     position: sticky; /* Make header sticky */
     top: 0;
     z-index: 1000;
-    height: 35vh; /* Slightly shorter initial height */
+    /*height: 35vh; !* Slightly shorter initial height *!*/
     background-color: var(--header-bg);
     display: flex;
     align-items: center;
@@ -101,13 +101,11 @@ aside {
     height: 100%;
     object-fit: cover;
     opacity: 0.8;
-    transition: opacity 0.4s ease-in-out;
 }
 
 .header-content {
     position: relative;
     z-index: 1;
-    transition: transform 0.4s ease-in-out;
 }
 
 .header-content h1 {
@@ -115,7 +113,6 @@ aside {
     font-weight: 700;
     margin: 0;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    transition: font-size 0.4s ease-in-out;
 }
 
 .header-content h1 a {
@@ -127,7 +124,6 @@ aside {
     font-size: 1.2rem;
     margin-top: 0.5rem;
     text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .header-controls {
@@ -138,40 +134,6 @@ aside {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    transition: top 0.4s ease-in-out;
-}
-
-/* Shrunk Header State */
-.main-header.header-shrunk {
-    height: 70px;
-    box-shadow: 0 4px 15px var(--shadow-color);
-}
-
-.main-header.header-shrunk .header-image {
-    opacity: 0;
-}
-
-.main-header.header-shrunk .header-content {
-    transform: scale(0.9);
-}
-
-.main-header.header-shrunk .header-content h1 {
-    font-size: 1.8rem;
-}
-
-.main-header.header-shrunk .header-content p {
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-}
-
-.main-header.header-shrunk .header-controls {
-    top: 15px;
-}
-
-.main-header.header-shrunk .profile-photo {
-    width: 40px;
-    height: 40px;
 }
 
 .home-link {
@@ -181,7 +143,6 @@ aside {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s;
 }
 
 .home-link:hover {
@@ -221,7 +182,6 @@ body.dark-mode .theme-icon-moon {
     height: 60px;
     border-radius: 50%;
     border: 2px solid var(--header-text);
-    transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
 }
 
 /* Section Header */
@@ -887,3 +847,35 @@ body.dark-mode :not(pre) > code {
     color: #a5d6ff;
     border-color: rgba(255,255,255,0.1);
 }
+
+
+#header.scrolled .header-content p {
+    font-size: 0;
+    transition: .4s linear;
+}
+
+#header .header-content p {
+    font-size: 1.5rem;
+    transition: .4s linear;
+}
+
+#header .header-content h1 {
+    padding: 1rem;
+    transition: .4s linear;
+}
+
+#header.scrolled .header-content h1 {
+    font-size: 2.5rem;
+    padding: 1rem;
+    transition: .4s linear;
+}
+
+#header .header-content h1 {
+    font-size: 3.5rem;
+    padding: 0;
+    transition: .4s linear;
+}
+
+/*#header {*/
+/*    height: 35vh;*/
+/*}*/

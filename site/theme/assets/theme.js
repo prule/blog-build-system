@@ -26,4 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleTheme);
     }
+
+    const header = document.querySelector('.main-header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            console.log(document.documentElement.scrollTop)
+            if (document.documentElement.scrollTop > 90) {
+                if (!header.classList.contains('scrolled')) {
+                    header.classList.add('scrolled');
+                }
+            } else if (document.documentElement.scrollTop < 10) {
+                if (header.classList.contains('scrolled')) {
+                    header.classList.remove('scrolled');
+                }
+            }
+
+        });
+    }
 });
