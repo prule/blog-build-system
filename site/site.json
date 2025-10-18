@@ -2,8 +2,17 @@
   "title": "My New Blog",
   "subTitle": "A place for my thoughts and ideas.",
   "socials": [
-    "https://x.com/prule",
-    "https://www.linkedin.com/in/paulrule",
-    "https://github.com/prule"
+    {
+      "icon": "github",
+      "url": "https://github.com/prule"
+    },
+    {
+      "icon": "linkedin",
+      "url": "https://www.linkedin.com/in/paulrule"
+    },
+    {
+      "icon": "x-twitter",
+      "url": "https://x.com/prule"
+    }
   ]
 }

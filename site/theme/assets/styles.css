@@ -605,6 +605,7 @@ body.dark-mode .note-meta {
 footer {
     position: relative;
     text-align: center;
+    font-size: 1.5rem;
     padding: 3rem 1rem;
     color: var(--footer-text);
     margin-top: 2rem;

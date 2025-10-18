@@ -1,7 +1,11 @@
 <footer>
     <div class="footer-content">
         <div class="social-links">
-             {{SOCIAL_LINKS}}
+            {{#site.socials}}
+            <a href="{{url}}" target="_blank" rel="noopener noreferrer" aria-label="{{icon}}">
+                    <i class="fab fa-{{icon}}"></i>
+            </a>
+            {{/site.socials}}
         </div>
         <p>&copy; {{CURRENT_YEAR}} {{SITE_TITLE}}</p>
     </div>
