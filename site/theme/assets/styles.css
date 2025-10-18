@@ -349,7 +349,13 @@ body.dark-mode a.tag {
 
 /* Archive Page */
 .archive-container {
-    width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+}
+
+.archive-list-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .archive-header {
@@ -417,12 +423,11 @@ body.dark-mode a.tag {
 
 .archive-item a {
     display: flex;
-    justify-content: space-between;
-    align-items: center; /* Changed to center for better vertical alignment */
-    padding: 0.5rem 1rem; /* Further reduced padding */
+    align-items: center;
+    padding: 0.5rem 1rem;
     text-decoration: none;
     color: var(--text-color);
-    gap: 0.5rem; /* Further reduced space between title and date */
+    gap: 1rem;
 }
 
 .archive-item:hover {

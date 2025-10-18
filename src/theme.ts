@@ -1,4 +1,4 @@
-import { readdirSync, statSync, readFileSync, writeFileSync, cpSync, existsSync } from 'fs';
+import { readdirSync, statSync, readFileSync, writeFileSync, cpSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import * as Mustache from 'mustache';
 
@@ -44,6 +44,59 @@ export class ThemeProcessor {
         } else {
             console.log('No theme assets directory found to copy.');
         }
+    }
+
+    /**
+     * Uses the article.json data file to pass a list of all articles to the article-archive template.
+     */
+    processArticleArchive() {
+        console.log('Processing article archive...');
+        const articlesJsonPath = join(this.dist, 'articles.json');
+        if (!existsSync(articlesJsonPath)) {
+            console.log('articles.json not found, skipping article archive processing.');
+            return;
+        }
+
+        const articles: ArticleIndexData[] = JSON.parse(readFileSync(articlesJsonPath, 'utf-8'));
+        const allTags = [...new Set(articles.flatMap(article => article.tags))];
+
+        const archiveTemplatePath = join(this.theme, 'article-archive.html');
+        const archiveTemplate = readFileSync(archiveTemplatePath, 'utf-8');
+
+        const headTemplatePath = join(this.theme, 'head.html');
+        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
+
+        const headerTemplatePath = join(this.theme, 'header.html');
+        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
+
+        const footerTemplatePath = join(this.theme, 'footer.html');
+        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
+
+        const partials = {
+            head: headTemplate,
+            header: headerTemplate,
+            footer: footerTemplate
+        };
+
+        const view = {
+            site: this.siteConfiguration,
+            articles: articles.map(article => ({
+                ...article,
+                modifiedDate: new Date(article.modifiedDate).toDateString(),
+                tagsJson: JSON.stringify(article.tags) // Pass tags as a JSON string for client-side filtering
+            })),
+            tags: allTags
+        };
+
+        const output = Mustache.render(archiveTemplate, view, partials);
+        const archiveDir = join(this.dist, 'articles');
+        if (!existsSync(archiveDir)) {
+            mkdirSync(archiveDir, { recursive: true });
+        }
+        const outputPath = join(archiveDir, 'archive.html');
+        writeFileSync(outputPath, output);
+
+        console.log('Article archive processed successfully.');
     }
 
     /**

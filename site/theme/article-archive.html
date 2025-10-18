@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+</head>
+<body>
+    {{> header}}
+
+    <div class="archive-container">
+        <header class="archive-header">
+            <h1>Article Archive</h1>
+            <p>Browse through all my articles, or use the filters to find something specific.</p>
+        </header>
+
+        <div class="filter-controls">
+            <input type="text" id="search-input" placeholder="Search articles...">
+            <div id="tag-filters">
+                {{#tags}}
+                <button class="tag-filter">{{.}}</button>
+                {{/tags}}
+            </div>
+            <select id="sort-select">
+                <option value="newest">Sort by Newest</option>
+                <option value="oldest">Sort by Oldest</option>
+            </select>
+        </div>
+
+        <div class="archive-list-wrapper">
+            <div id="archive-list">
+                {{#articles}}
+                <div class="archive-item" data-tags='{{tagsJson}}'>
+                    <a href="{{path}}">
+                        <h3>{{title}}</h3>
+                        <p class="article-meta">{{modifiedDate}}</p>
+                    </a>
+                </div>
+                {{/articles}}
+            </div>
+            <p id="no-results" class="no-results" style="display: none;">No articles found.</p>
+        </div>
+    </div>
+
+    {{> footer}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const tagFilters = document.querySelectorAll('.tag-filter');
+            const sortSelect = document.getElementById('sort-select');
+            const archiveList = document.getElementById('archive-list');
+            const noResults = document.getElementById('no-results');
+            const articles = Array.from(archiveList.children);
+
+            let activeTags = new Set();
+
+            const filterAndSortArticles = () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const sortOrder = sortSelect.value;
+
+                let visibleArticleCount = 0;
+
+                // Sort articles
+                const sortedArticles = [...articles].sort((a, b) => {
+                    const dateA = new Date(a.querySelector('.article-meta').textContent);
+                    const dateB = new Date(b.querySelector('.article-meta').textContent);
+                    return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+                });
+
+                // Re-append sorted articles to the DOM
+                sortedArticles.forEach(article => archiveList.appendChild(article));
+
+                // Filter articles
+                sortedArticles.forEach(article => {
+                    const title = article.querySelector('h3').textContent.toLowerCase();
+                    const articleTags = JSON.parse(article.dataset.tags);
+
+                    const matchesSearch = title.includes(searchTerm);
+                    const matchesTags = activeTags.size === 0 || [...activeTags].every(tag => articleTags.includes(tag));
+
+                    if (matchesSearch && matchesTags) {
+                        article.style.display = 'block';
+                        visibleArticleCount++;
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = visibleArticleCount === 0 ? 'block' : 'none';
+            };
+
+            searchInput.addEventListener('input', filterAndSortArticles);
+
+            tagFilters.forEach(tagButton => {
+                tagButton.addEventListener('click', () => {
+                    const tag = tagButton.textContent;
+                    if (activeTags.has(tag)) {
+                        activeTags.delete(tag);
+                        tagButton.classList.remove('active');
+                    } else {
+                        activeTags.add(tag);
+                        tagButton.classList.add('active');
+                    }
+                    filterAndSortArticles();
+                });
+            });
+
+            sortSelect.addEventListener('change', filterAndSortArticles);
+
+            // Initial sort
+            filterAndSortArticles();
+        });
+    </script>
+</body>
+</html>
