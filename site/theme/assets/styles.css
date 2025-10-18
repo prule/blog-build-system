@@ -12,9 +12,9 @@
   --footer-text: rgba(255, 255, 255, 0.8);
   --shadow-color: rgba(0,0,0,0.1);
   --tag-bg: var(--accent-color);
-  --tag-text: var(--header-text);
+  --tag-text: #ffffff;
   --tag-hover-bg: #2980b9;
-  --tag-text-hover: var(--header-text);
+  --tag-text-hover: #ffffff;
   --series-tag-bg: #6c757d;
   --series-tag-text: #ffffff;
   --series-tag-hover-bg: #5a6268;
@@ -310,7 +310,7 @@ body.dark-mode .theme-icon-moon {
     margin-bottom: 1rem;
 }
 
-.tag {
+a.tag {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 15px;
@@ -322,9 +322,13 @@ body.dark-mode .theme-icon-moon {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.tag:hover {
+a.tag:hover {
     background-color: var(--tag-hover-bg);
     color: var(--tag-text-hover);
+}
+
+body.dark-mode a.tag {
+    color: var(--tag-text);
 }
 
 .series-tag {
