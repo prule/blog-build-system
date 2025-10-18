@@ -270,7 +270,7 @@ body.dark-mode .theme-icon-moon {
 .article-image-container {
     position: relative;
     overflow: hidden;
-    max-height: 350px;
+    max-height: 250px;
 }
 
 .article-image-container img {

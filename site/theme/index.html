@@ -16,8 +16,8 @@
             </div>
             <div id="articles-container">
                 {{#articles}}
-                <article class="article">
-                    <a href="{{path}}" class="article-link-wrapper">
+                    <article class="article">
+                        <a href="{{path}}" class="article-link-wrapper">
                         <div class="article-image-container">
                             {{#image}}
                             <img src="{{image}}" alt="{{title}}" class="article-image">
@@ -27,8 +27,13 @@
                                 <p class="article-meta">{{modifiedDate}}</p>
                             </div>
                         </div>
+                        </a>
+                        <a href="{{path}}" class="article-link-wrapper">
                         <div class="article-summary">
                             <div class="tag-list">
+                                {{#series}}
+                                <a href="/series.html?series={{series}}" class="series-tag">{{series}}</a>
+                                {{/series}}
                                 {{#tags}}
                                 <a href="/archive.html?tag={{.}}" class="tag">{{.}}</a>
                                 {{/tags}}
@@ -36,8 +41,8 @@
                             <p>{{summary}}...</p>
                             <span class="read-more">Read More &rarr;</span>
                         </div>
-                    </a>
-                </article>
+                        </a>
+                    </article>
                 {{/articles}}
             </div>
         </section>

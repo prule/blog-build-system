@@ -20,6 +20,7 @@ interface ArticleIndexData {
     tags: string[];
     path: string;
     image?: string;
+    series?: string;
 }
 
 export class ContentProcessor {
@@ -87,7 +88,8 @@ export class ContentProcessor {
                         tags: metadata.tags,
                         summary: summary,
                         path: articlePath,
-                        image: metadata.image
+                        image: metadata.image,
+                        series: metadata.series
                     });
                 } catch (error) {
                     console.error(`Error processing metadata for ${file}:`, error);
