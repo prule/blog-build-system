@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.main-header');
     if (header) {
         window.addEventListener('scroll', () => {
-            console.log(document.documentElement.scrollTop)
             if (document.documentElement.scrollTop > 90) {
                 if (!header.classList.contains('scrolled')) {
                     header.classList.add('scrolled');
