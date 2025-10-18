@@ -37,9 +37,9 @@ body.dark-mode {
   --footer-text: rgba(255, 255, 255, 0.8);
   --shadow-color: rgba(0,0,0,0.4);
   --tag-bg: var(--accent-color);
-  --tag-text: var(--header-bg);
+  --tag-text: #000000;
   --tag-hover-bg: #8ecae6;
-  --tag-text-hover: var(--header-bg);
+  --tag-text-hover: #000000;
   --series-tag-bg: #495057;
   --series-tag-text: #ffffff;
   --series-tag-hover-bg: #343a40;
