@@ -42,6 +42,16 @@
         const noResults = document.getElementById('no-results');
         const notes = Array.from(notesContainer.getElementsByClassName('note'));
 
+        const debounce = (func, delay) => {
+            let timeoutId;
+            return (...args) => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        };
+
         const filterNotes = () => {
             const searchTerm = searchInput.value.toLowerCase();
             let visibleNotesCount = 0;
@@ -60,7 +70,7 @@
             noResults.style.display = visibleNotesCount === 0 ? 'block' : 'none';
         };
 
-        searchInput.addEventListener('input', filterNotes);
+        searchInput.addEventListener('input', debounce(filterNotes, 300));
 
         filterNotes();
     });

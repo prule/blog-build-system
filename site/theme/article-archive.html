@@ -71,6 +71,16 @@
 
         let activeTags = new Set();
 
+        const debounce = (func, delay) => {
+            let timeoutId;
+            return (...args) => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        };
+
         const filterAndSortArticles = () => {
             const searchTerm = searchInput.value.toLowerCase();
             const sortOrder = sortSelect.value;
@@ -106,7 +116,7 @@
             noResults.style.display = visibleArticleCount === 0 ? 'block' : 'none';
         };
 
-        searchInput.addEventListener('input', filterAndSortArticles);
+        searchInput.addEventListener('input', debounce(filterAndSortArticles, 300));
 
         tagFilters.forEach(tagButton => {
             tagButton.addEventListener('click', () => {
