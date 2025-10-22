@@ -23,7 +23,7 @@ interface ArticleIndexData {
     series?: string;
 }
 
-export class ContentProcessor {
+export class ArticleProcessor {
     private readonly path: string;
     private readonly dist: string;
     private readonly asciidoctor: Asciidoctor;
@@ -36,18 +36,8 @@ export class ContentProcessor {
     }
 
     run() {
-        this.copy();
         this.transformArticles();
         this.writeIndex();
-    }
-
-    /**
-     * Copies the content to the dist folder
-     */
-    copy() {
-        console.log(`Copying files from ${this.path} to ${this.dist}`);
-        cpSync(this.path, this.dist, { recursive: true });
-        console.log('Copy complete.');
     }
 
     /**

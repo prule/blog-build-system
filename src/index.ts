@@ -2,8 +2,9 @@ import { readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { ContentProcessor } from './content';
+import { ContentProcessor } from './ContentProcessor';
 import {ThemeProcessor} from "./theme";
+import {ArticleProcessor} from "./ArticleProcessor";
 
 /**
  * Build configuration looks like this:
@@ -69,6 +70,12 @@ try {
         join(baseDir, buildConfiguration.dist)
     );
     contentProcessor.run();
+
+    const articleProcessor = new ArticleProcessor(
+        join(baseDir, buildConfiguration.content),
+        join(baseDir, buildConfiguration.dist)
+    )
+    articleProcessor.run();
 
     const themeProcessor = new ThemeProcessor(
         join(baseDir, buildConfiguration.theme),
