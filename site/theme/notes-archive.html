@@ -11,7 +11,11 @@
         <section id="notes">
             <div class="section-header">
                 <h2>Notes Archive</h2>
-                <p>Browse through all my notes.</p>
+                <p>Browse through all my notes, or use the search to find something specific.</p>
+            </div>
+
+            <div class="filter-controls">
+                <input type="text" id="search-input" placeholder="Search notes...">
             </div>
 
             <div id="notes-container">
@@ -23,12 +27,44 @@
                         </div>
                     </div>
                 {{/notes}}
+                <p id="no-results" class="no-results" style="display: none;">No notes found.</p>
             </div>
         </section>
     </main>
 </div>
 
 {{> footer}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('search-input');
+        const notesContainer = document.getElementById('notes-container');
+        const noResults = document.getElementById('no-results');
+        const notes = Array.from(notesContainer.getElementsByClassName('note'));
+
+        const filterNotes = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            let visibleNotesCount = 0;
+
+            notes.forEach(note => {
+                const noteContent = note.querySelector('.note-content').textContent.toLowerCase();
+
+                if (noteContent.includes(searchTerm)) {
+                    note.style.display = 'block';
+                    visibleNotesCount++;
+                } else {
+                    note.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleNotesCount === 0 ? 'block' : 'none';
+        };
+
+        searchInput.addEventListener('input', filterNotes);
+
+        filterNotes();
+    });
+</script>
 
 </body>
 </html>
