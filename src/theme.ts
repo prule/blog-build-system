@@ -17,6 +17,7 @@ interface ArticleIndexData {
     modifiedDate: string;
     tags: string[];
     path: string;
+    series: string;
 }
 
 interface NotesIndexData {
@@ -73,6 +74,7 @@ export class ThemeProcessor {
 
         const articles: ArticleIndexData[] = JSON.parse(readFileSync(articlesJsonPath, 'utf-8'));
         const allTags = [...new Set(articles.flatMap(article => article.tags))];
+        const allSeries = [...new Set(articles.map(article => article.series).filter(series => series))];
 
         const archiveTemplatePath = join(this.theme, 'article-archive.html');
         const archiveTemplate = readFileSync(archiveTemplatePath, 'utf-8');
@@ -99,7 +101,8 @@ export class ThemeProcessor {
                 modifiedDate: new Date(article.modifiedDate).toDateString(),
                 tagsJson: JSON.stringify(article.tags) // Pass tags as a JSON string for client-side filtering
             })),
-            tags: allTags
+            tags: allTags,
+            series: allSeries
         };
 
         const output = Mustache.render(archiveTemplate, view, partials);

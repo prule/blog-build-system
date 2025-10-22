@@ -2,6 +2,36 @@
 <html lang="en">
 <head>
     {{> head}}
+    <style>
+        .filter-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .filter-row .filter-label {
+            font-weight: bold;
+            min-width: 50px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #search-input {
+            flex-grow: 1;
+        }
+    </style>
 </head>
 <body>
 {{> header}}
@@ -15,16 +45,29 @@
             </div>
 
             <div class="filter-controls">
-                <input type="text" id="search-input" placeholder="Search articles...">
-                <div id="tag-filters">
-                    {{#tags}}
-                    <button class="tag-filter">{{.}}</button>
-                    {{/tags}}
+                <div class="filter-row">
+                    <input type="text" id="search-input" placeholder="Search articles...">
+                    <select id="sort-select">
+                        <option value="newest">Sort by Newest</option>
+                        <option value="oldest">Sort by Oldest</option>
+                    </select>
                 </div>
-                <select id="sort-select">
-                    <option value="newest">Sort by Newest</option>
-                    <option value="oldest">Sort by Oldest</option>
-                </select>
+                <div class="filter-row">
+                    <span class="filter-label">Series:</span>
+                    <div id="series-filters" class="filter-buttons">
+                        {{#series}}
+                        <button class="series-filter">{{.}}</button>
+                        {{/series}}
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <span class="filter-label">Tags:</span>
+                    <div id="tag-filters" class="filter-buttons">
+                        {{#tags}}
+                        <button class="tag-filter">{{.}}</button>
+                        {{/tags}}
+                    </div>
+                </div>
             </div>
 
             <div id="articles-container">
@@ -64,12 +107,14 @@
     document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('search-input');
         const tagFilters = document.querySelectorAll('.tag-filter');
+        const seriesFilters = document.querySelectorAll('.series-filter');
         const sortSelect = document.getElementById('sort-select');
         const articlesContainer = document.getElementById('articles-container');
         const noResults = document.getElementById('no-results');
         const articles = Array.from(articlesContainer.getElementsByClassName('article'));
 
         let activeTags = new Set();
+        let activeSeries = new Set();
 
         const debounce = (func, delay) => {
             let timeoutId;
@@ -102,10 +147,11 @@
                 const series = (article.dataset.series || '').toLowerCase();
                 const articleTags = article.dataset.tags ? JSON.parse(article.dataset.tags) : [];
 
-                const matchesSearch = title.includes(searchTerm) || summary.includes(searchTerm) || series.includes(searchTerm);
+                const matchesSearch = title.includes(searchTerm) || summary.includes(searchTerm);
                 const matchesTags = activeTags.size === 0 || [...activeTags].every(tag => articleTags.includes(tag));
+                const matchesSeries = activeSeries.size === 0 || activeSeries.has(series);
 
-                if (matchesSearch && matchesTags) {
+                if (matchesSearch && matchesTags && matchesSeries) {
                     article.style.display = 'block';
                     visibleArticleCount++;
                 } else {
@@ -127,6 +173,20 @@
                 } else {
                     activeTags.add(tag);
                     tagButton.classList.add('active');
+                }
+                filterAndSortArticles();
+            });
+        });
+
+        seriesFilters.forEach(seriesButton => {
+            seriesButton.addEventListener('click', () => {
+                const series = seriesButton.textContent;
+                if (activeSeries.has(series)) {
+                    activeSeries.delete(series);
+                    seriesButton.classList.remove('active');
+                } else {
+                    activeSeries.add(series);
+                    seriesButton.classList.add('active');
                 }
                 filterAndSortArticles();
             });
