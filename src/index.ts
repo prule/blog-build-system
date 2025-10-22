@@ -89,10 +89,7 @@ try {
         join(baseDir, buildConfiguration.dist),
         siteConfiguration
     )
-    themeProcessor.processArticles();
-    themeProcessor.copyAssets();
-    themeProcessor.processHomePage();
-    themeProcessor.processArticleArchive();
+    themeProcessor.run();
 } catch (error) {
     console.error('Error reading or parsing build-configuration.json:', error);
     process.exit(1); // Exit with an error code

@@ -36,6 +36,14 @@ export class ThemeProcessor {
         this.siteConfiguration = siteConfiguration;
     }
 
+    run() {
+        this.copyAssets();
+        this.processArticles();
+        this.processArticleArchive();
+        this.processNotesArchive();
+        this.processHomePage();
+    }
+
     /**
      * Copies theme/assets to dist/assets (recursively)
      */
@@ -103,6 +111,53 @@ export class ThemeProcessor {
         writeFileSync(outputPath, output);
 
         console.log('Article archive processed successfully.');
+    }
+
+    processNotesArchive() {
+        console.log('Processing notes archive...');
+        const notesJsonPath = join(this.dist, 'notes.json');
+        if (!existsSync(notesJsonPath)) {
+            console.log('notes.json not found, skipping notes archive processing.');
+            return;
+        }
+
+        const notes: NotesIndexData[] = JSON.parse(readFileSync(notesJsonPath, 'utf-8'));
+
+        const archiveTemplatePath = join(this.theme, 'notes-archive.html');
+        const archiveTemplate = readFileSync(archiveTemplatePath, 'utf-8');
+
+        const headTemplatePath = join(this.theme, 'head.html');
+        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
+
+        const headerTemplatePath = join(this.theme, 'header.html');
+        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
+
+        const footerTemplatePath = join(this.theme, 'footer.html');
+        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
+
+        const partials = {
+            head: headTemplate,
+            header: headerTemplate,
+            footer: footerTemplate
+        };
+
+        const view = {
+            site: this.siteConfiguration,
+            notes: notes.map(note => ({
+                ...note,
+                modifiedDate: new Date(note.modifiedDate).toDateString()
+            })),
+        };
+
+        const output = Mustache.render(archiveTemplate, view, partials);
+        const archiveDir = join(this.dist, 'notes');
+        if (!existsSync(archiveDir)) {
+            mkdirSync(archiveDir, { recursive: true });
+        }
+        const outputPath = join(archiveDir, 'archive.html');
+        writeFileSync(outputPath, output);
+
+        console.log('Notes archive processed successfully.');
     }
 
     /**
