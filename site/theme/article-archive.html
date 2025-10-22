@@ -28,6 +28,26 @@
             gap: 0.5rem;
         }
 
+        .series-filter, .tag-filter {
+            background-color: var(--background-secondary);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .series-filter:hover, .tag-filter:hover {
+            background-color: var(--primary-color-light);
+        }
+
+        .series-filter.active, .tag-filter.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
         #search-input {
             flex-grow: 1;
         }
