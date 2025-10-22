@@ -36,14 +36,14 @@ export class ArticleProcessor {
     }
 
     run() {
-        this.transformArticles();
+        this.transform();
         this.writeIndex();
     }
 
     /**
      * Transforms all ReadMe.md and ReadMe.adoc files in the dist folder to HTML files called ReadMe.html
      */
-    transformArticles() {
+    transform() {
         console.log('Transforming articles...');
         const markdownConverter = new showdown.Converter();
 

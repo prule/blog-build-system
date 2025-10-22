@@ -5,6 +5,7 @@ import { hideBin } from 'yargs/helpers';
 import { ContentProcessor } from './ContentProcessor';
 import {ThemeProcessor} from "./theme";
 import {ArticleProcessor} from "./ArticleProcessor";
+import {NotesProcessor} from "./NotesProcessor";
 
 /**
  * Build configuration looks like this:
@@ -73,9 +74,15 @@ try {
 
     const articleProcessor = new ArticleProcessor(
         join(baseDir, buildConfiguration.content),
-        join(baseDir, buildConfiguration.dist)
+        join(baseDir, buildConfiguration.dist, "articles")
     )
     articleProcessor.run();
+
+    const notesProcessor = new NotesProcessor(
+        join(baseDir, buildConfiguration.content, "notes"),
+        join(baseDir, buildConfiguration.dist, "notes")
+    )
+    notesProcessor.run();
 
     const themeProcessor = new ThemeProcessor(
         join(baseDir, buildConfiguration.theme),
