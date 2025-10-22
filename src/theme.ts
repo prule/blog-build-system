@@ -19,6 +19,12 @@ interface ArticleIndexData {
     path: string;
 }
 
+interface NotesIndexData {
+    content: string;
+    modifiedDate: string;
+    path: string;
+}
+
 export class ThemeProcessor {
     private readonly theme: string;
     private readonly dist: string;
@@ -100,14 +106,14 @@ export class ThemeProcessor {
     }
 
     /**
-     * Uses the article.json data file to pass a list of the most recent articles to the index template.
+     * Uses the articles.json data file to pass a list of the most recent articles to the index template.
+     * Uses the notes.json to pass a list of the most recent notes to the index template.
      */
     processHomePage() {
         console.log('Processing home page...');
         const articlesJsonPath = join(this.dist, 'articles.json');
         if (!existsSync(articlesJsonPath)) {
             console.log('articles.json not found, skipping home page processing.');
-            return;
         }
 
         const articles: ArticleIndexData[] = JSON.parse(readFileSync(articlesJsonPath, 'utf-8'));
@@ -121,6 +127,21 @@ export class ThemeProcessor {
                 // Format the date for display
                 modifiedDate: new Date(article.modifiedDate).toDateString()
             }));
+
+        const notesJsonPath = join(this.dist, 'notes.json');
+        let recentNotes: NotesIndexData[] = [];
+        if (existsSync(notesJsonPath)) {
+            const notes: NotesIndexData[] = JSON.parse(readFileSync(notesJsonPath, 'utf-8'));
+            recentNotes = notes
+                .sort((a, b) => new Date(b.modifiedDate).getTime() - new Date(a.modifiedDate).getTime())
+                .slice(0, 10)
+                .map(note => ({
+                    ...note,
+                    modifiedDate: new Date(note.modifiedDate).toDateString()
+                }));
+        } else {
+            console.log('notes.json not found, skipping notes on home page.');
+        }
 
         const indexTemplatePath = join(this.theme, 'index.html');
         const indexTemplate = readFileSync(indexTemplatePath, 'utf-8');
@@ -142,7 +163,8 @@ export class ThemeProcessor {
 
         const view = {
             site: this.siteConfiguration,
-            articles: recentArticles
+            articles: recentArticles,
+            notes: recentNotes
         };
 
         const output = Mustache.render(indexTemplate, view, partials);

@@ -51,7 +51,15 @@
         <section id="notes">
             <h2>Notes</h2>
             <div id="notes-container">
-                <!-- Notes will be loaded here -->
+                {{#notes}}
+                    <div class="note">
+                        <div class="note-content">{{{content}}}</div>
+                        <div class="note-meta">
+                            <span>{{modifiedDate}}</span>
+                            <a href="{{path}}">Permalink</a>
+                        </div>
+                    </div>
+                {{/notes}}
             </div>
         </section>
     </aside>

@@ -73,14 +73,14 @@ try {
     contentProcessor.run();
 
     const articleProcessor = new ArticleProcessor(
-        join(baseDir, buildConfiguration.content),
-        join(baseDir, buildConfiguration.dist, "articles")
+        join(baseDir, buildConfiguration.content, "articles"),
+        join(baseDir, buildConfiguration.dist)
     )
     articleProcessor.run();
 
     const notesProcessor = new NotesProcessor(
         join(baseDir, buildConfiguration.content, "notes"),
-        join(baseDir, buildConfiguration.dist, "notes")
+        join(baseDir, buildConfiguration.dist)
     )
     notesProcessor.run();
 
