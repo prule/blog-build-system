@@ -40,7 +40,15 @@
             </div>
 
             <div class="filter-controls">
-                <input type="text" id="search-input" placeholder="Search notes...">
+                <div class="filter-row">
+                    <input type="text" id="search-input" placeholder="Search notes...">
+                    <div class="sort-select-wrapper">
+                        <select id="sort-select">
+                            <option value="newest">Sort by Newest</option>
+                            <option value="oldest">Sort by Oldest</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div id="notes-container">
@@ -63,6 +71,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('search-input');
+        const sortSelect = document.getElementById('sort-select');
         const notesContainer = document.getElementById('notes-container');
         const noResults = document.getElementById('no-results');
         const notes = Array.from(notesContainer.getElementsByClassName('note'));
@@ -77,11 +86,21 @@
             };
         };
 
-        const filterNotes = () => {
+        const filterAndSortNotes = () => {
             const searchTerm = searchInput.value.toLowerCase();
+            const sortOrder = sortSelect.value;
+
             let visibleNotesCount = 0;
 
-            notes.forEach(note => {
+            const sortedNotes = [...notes].sort((a, b) => {
+                const dateA = new Date(a.querySelector('.note-meta span').textContent);
+                const dateB = new Date(b.querySelector('.note-meta span').textContent);
+                return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+            });
+
+            sortedNotes.forEach(note => notesContainer.appendChild(note));
+
+            sortedNotes.forEach(note => {
                 const noteContent = note.querySelector('.note-content').textContent.toLowerCase();
 
                 if (noteContent.includes(searchTerm)) {
@@ -95,9 +114,10 @@
             noResults.style.display = visibleNotesCount === 0 ? 'block' : 'none';
         };
 
-        searchInput.addEventListener('input', debounce(filterNotes, 300));
+        searchInput.addEventListener('input', debounce(filterAndSortNotes, 300));
+        sortSelect.addEventListener('change', filterAndSortNotes);
 
-        filterNotes(); // Initial filter on page load
+        filterAndSortNotes(); // Initial filter and sort on page load
     });
 </script>
 
