@@ -45,6 +45,22 @@ export class ThemeProcessor {
         this.processHomePage();
     }
 
+    getPartials() {
+        const headTemplatePath = join(this.theme, 'head.html');
+        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
+
+        const headerTemplatePath = join(this.theme, 'header.html');
+        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
+
+        const footerTemplatePath = join(this.theme, 'footer.html');
+        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
+
+        return {
+            head: headTemplate,
+            header: headerTemplate,
+            footer: footerTemplate
+        };
+    }
     /**
      * Copies theme/assets to dist/assets (recursively)
      */
@@ -79,20 +95,7 @@ export class ThemeProcessor {
         const archiveTemplatePath = join(this.theme, 'article-archive.html');
         const archiveTemplate = readFileSync(archiveTemplatePath, 'utf-8');
 
-        const headTemplatePath = join(this.theme, 'head.html');
-        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
-
-        const headerTemplatePath = join(this.theme, 'header.html');
-        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
-
-        const footerTemplatePath = join(this.theme, 'footer.html');
-        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
-
-        const partials = {
-            head: headTemplate,
-            header: headerTemplate,
-            footer: footerTemplate
-        };
+        const partials = this.getPartials()
 
         const view = {
             site: this.siteConfiguration,
@@ -129,20 +132,7 @@ export class ThemeProcessor {
         const archiveTemplatePath = join(this.theme, 'notes-archive.html');
         const archiveTemplate = readFileSync(archiveTemplatePath, 'utf-8');
 
-        const headTemplatePath = join(this.theme, 'head.html');
-        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
-
-        const headerTemplatePath = join(this.theme, 'header.html');
-        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
-
-        const footerTemplatePath = join(this.theme, 'footer.html');
-        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
-
-        const partials = {
-            head: headTemplate,
-            header: headerTemplate,
-            footer: footerTemplate
-        };
+        const partials = this.getPartials();
 
         const view = {
             site: this.siteConfiguration,
@@ -204,20 +194,7 @@ export class ThemeProcessor {
         const indexTemplatePath = join(this.theme, 'index.html');
         const indexTemplate = readFileSync(indexTemplatePath, 'utf-8');
 
-        const headTemplatePath = join(this.theme, 'head.html');
-        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
-
-        const headerTemplatePath = join(this.theme, 'header.html');
-        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
-
-        const footerTemplatePath = join(this.theme, 'footer.html');
-        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
-
-        const partials = {
-            head: headTemplate,
-            header: headerTemplate,
-            footer: footerTemplate
-        };
+        const partials = this.getPartials()
 
         const view = {
             site: this.siteConfiguration,
@@ -244,20 +221,7 @@ export class ThemeProcessor {
         const articleTemplatePath = join(this.theme, 'article.html');
         const articleTemplate = readFileSync(articleTemplatePath, 'utf-8');
 
-        const headTemplatePath = join(this.theme, 'head.html');
-        const headTemplate = readFileSync(headTemplatePath, 'utf-8');
-
-        const headerTemplatePath = join(this.theme, 'header.html');
-        const headerTemplate = readFileSync(headerTemplatePath, 'utf-8');
-
-        const footerTemplatePath = join(this.theme, 'footer.html');
-        const footerTemplate = readFileSync(footerTemplatePath, 'utf-8');
-
-        const partials = {
-            head: headTemplate,
-            header: headerTemplate,
-            footer: footerTemplate
-        };
+        const partials = this.getPartials()
 
         this.findAndProcess(join(this.dist, 'articles'), file => {
             if (file.endsWith('ReadMe.html')) {
