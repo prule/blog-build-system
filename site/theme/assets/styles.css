@@ -549,7 +549,7 @@ body.dark-mode .article-full .article-meta {
 .back-link {
     display: inline-block;
     margin-top: 2rem;
-    color: var(--accent-.series-filter, .tag-filter {
+    /*color: var(--accent-.series-filter, .tag-filter)*/
     background-color: var(--card-background);
     color: var(--text-color);
     border: 1px solid var(--border-color);
@@ -557,8 +557,6 @@ body.dark-mode .article-full .article-meta {
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-}
-color);
     text-decoration: none;
     font-weight: 600;
 }
