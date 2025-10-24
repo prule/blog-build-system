@@ -59,7 +59,7 @@
                             <a href="/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
                             {{/tags}}
                         </div>
-                        <p>{{summary}}...</p>
+                        <p>{{{summary}}}...</p>
                         <a href="{{path}}" class="article-link-wrapper">
                             <span class="read-more">Read More &rarr;</span>
                         </a>
@@ -158,7 +158,7 @@
 
         const applyFiltersFromURL = () => {
             const params = new URLSearchParams(window.location.search);
-            const tags = params.get('tags');
+            const tags = params.get('tags') || params.get('tag');
             const series = params.get('series');
             const search = params.get('search');
             const sort = params.get('sort');
