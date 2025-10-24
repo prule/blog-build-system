@@ -66,7 +66,7 @@ try {
     console.log('Successfully loaded configuration:', buildConfiguration);
 
     // Process content
-    const processors = [
+    const processors: Processor[] = [
         new ContentProcessor(
             join(baseDir, buildConfiguration.content),
             join(baseDir, buildConfiguration.dist)

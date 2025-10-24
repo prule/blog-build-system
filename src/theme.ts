@@ -26,7 +26,7 @@ interface NotesIndexData {
     path: string;
 }
 
-export class ThemeProcessor {
+export class ThemeProcessor implements Processor {
     private readonly theme: string;
     private readonly dist: string;
     private readonly siteConfiguration: SiteConfiguration;
