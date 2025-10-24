@@ -14,7 +14,7 @@ interface NotesIndexData {
     path: string;
 }
 
-export class NotesProcessor {
+export class NotesProcessor implements Processor {
     private readonly path: string;
     private readonly dist: string;
 

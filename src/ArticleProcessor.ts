@@ -23,7 +23,7 @@ interface ArticleIndexData {
     series?: string;
 }
 
-export class ArticleProcessor {
+export class ArticleProcessor implements Processor {
     private readonly path: string;
     private readonly dist: string;
     private readonly asciidoctor: Asciidoctor;

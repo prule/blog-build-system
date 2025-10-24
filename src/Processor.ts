@@ -1,0 +1,3 @@
+interface Processor {
+    run(): void;
+}

@@ -1,8 +1,8 @@
-import { readFileSync } from 'fs';
-import { join, resolve } from 'path';
+import {readFileSync} from 'fs';
+import {join, resolve} from 'path';
 import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
-import { ContentProcessor } from './ContentProcessor';
+import {hideBin} from 'yargs/helpers';
+import {ContentProcessor} from './ContentProcessor';
 import {ThemeProcessor} from "./theme";
 import {ArticleProcessor} from "./ArticleProcessor";
 import {NotesProcessor} from "./NotesProcessor";
@@ -66,30 +66,27 @@ try {
     console.log('Successfully loaded configuration:', buildConfiguration);
 
     // Process content
-    const contentProcessor = new ContentProcessor(
-        join(baseDir, buildConfiguration.content),
-        join(baseDir, buildConfiguration.dist)
-    );
-    contentProcessor.run();
+    const processors = [
+        new ContentProcessor(
+            join(baseDir, buildConfiguration.content),
+            join(baseDir, buildConfiguration.dist)
+        ),
+        new ArticleProcessor(
+            join(baseDir, buildConfiguration.content, "articles"),
+            join(baseDir, buildConfiguration.dist)
+        ),
+        new NotesProcessor(
+            join(baseDir, buildConfiguration.content, "notes"),
+            join(baseDir, buildConfiguration.dist)
+        ),
+        new ThemeProcessor(
+            join(baseDir, buildConfiguration.theme),
+            join(baseDir, buildConfiguration.dist),
+            siteConfiguration
+        )
+    ]
 
-    const articleProcessor = new ArticleProcessor(
-        join(baseDir, buildConfiguration.content, "articles"),
-        join(baseDir, buildConfiguration.dist)
-    )
-    articleProcessor.run();
-
-    const notesProcessor = new NotesProcessor(
-        join(baseDir, buildConfiguration.content, "notes"),
-        join(baseDir, buildConfiguration.dist)
-    )
-    notesProcessor.run();
-
-    const themeProcessor = new ThemeProcessor(
-        join(baseDir, buildConfiguration.theme),
-        join(baseDir, buildConfiguration.dist),
-        siteConfiguration
-    )
-    themeProcessor.run();
+    processors.forEach(processor => processor.run());
 } catch (error) {
     console.error('Error reading or parsing build-configuration.json:', error);
     process.exit(1); // Exit with an error code

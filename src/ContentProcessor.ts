@@ -1,29 +1,6 @@
-import { cpSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
-import { join, basename, dirname, relative } from 'path';
-import * as showdown from 'showdown';
-import asciidoctor, {Asciidoctor} from "asciidoctor";
+import { cpSync } from 'fs';
 
-interface Metadata {
-    title: string;
-    subTitle: string;
-    date: string;
-    modifiedDate: string;
-    series: string;
-    tags: string[];
-    image?: string;
-}
-
-interface ArticleIndexData {
-    title: string;
-    summary: string;
-    modifiedDate: string;
-    tags: string[];
-    path: string;
-    image?: string;
-    series?: string;
-}
-
-export class ContentProcessor {
+export class ContentProcessor implements Processor {
     private readonly path: string;
     private readonly dist: string;
 
