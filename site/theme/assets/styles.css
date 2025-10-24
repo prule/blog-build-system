@@ -577,6 +577,15 @@ color);
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
+.note-content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.note-content a:hover {
+    text-decoration: none;
+}
+
 .note-meta {
     font-size: 0.8rem;
     color: #6c757d;
