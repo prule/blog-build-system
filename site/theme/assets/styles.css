@@ -527,6 +527,16 @@ body.dark-mode .article-full .article-meta {
     line-height: 1.8;
 }
 
+/* Make links in article body stand out */
+.article-body a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.article-body a:hover {
+    text-decoration: none;
+}
+
 .back-link {
     display: inline-block;
     margin-top: 2rem;
