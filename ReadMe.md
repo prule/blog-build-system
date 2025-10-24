@@ -240,6 +240,63 @@ This is my first note.
 This is my second note.
 ```
 
+## Writing Articles
+
+### Code Blocks
+
+**Markdown:**
+
+Use triple backticks to create code blocks, and specify the language for syntax highlighting.
+
+````markdown
+```typescript
+console.log('Hello, World!');
+```
+````
+
+**AsciiDoc:**
+
+Use four hyphens to create code blocks, and specify the language and title.
+
+```asciidoc
+[source,typescript,title="Hello World in TypeScript"]
+----
+console.log('Hello, World!');
+----
+```
+
+### Including Content from Files (AsciiDoc)
+
+AsciiDoc allows you to include content from other files, which is useful for keeping your articles organized and reusing content.
+
+**Include a file:**
+
+```asciidoc
+include::path/to/your/file.txt[]
+```
+
+**Include specific lines from a file:**
+
+```asciidoc
+include::path/to/your/file.txt[lines=1..5]
+```
+
+**Include a tagged region from a file:**
+
+In the source file:
+
+```java
+// tag::my-region[]
+System.out.println("Hello, World!");
+// end::my-region[]
+```
+
+In your AsciiDoc file:
+
+```asciidoc
+include::path/to/your/file.java[tag=my-region]
+```
+
 ## Theming
 
 The website's appearance is controlled by the theme, which is located in the `theme` directory. The theme uses Mustache for templating.

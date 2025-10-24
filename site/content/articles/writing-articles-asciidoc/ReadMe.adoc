@@ -1,0 +1,73 @@
+## Writing Articles using Asciidoc
+
+### Code Blocks
+
+Use four hyphens to create code blocks, and specify the language and title.
+
+----
+```typescript
+console.log('Hello, World!');
+console.log('Hello, World!');
+console.log('Hello, World!');
+```
+----
+
+Renders as:
+
+```typescript
+console.log('Hello, World!');
+console.log('Hello, World!');
+console.log('Hello, World!');
+```
+
+### Including Content from Files (AsciiDoc)
+
+AsciiDoc allows you to include content from other files, which is useful for keeping your articles organized and reusing content.
+
+**Include a file:**
+
+----
+```asciidoc
+\include::path/to/your/file.txt[]
+```
+----
+
+**Include specific lines from a file:**
+
+----
+```asciidoc
+\include::path/to/your/file.txt[lines=2..5]
+```
+----
+
+Renders as:
+```asciidoc
+include::./file.txt[lines=2..5]
+```
+
+View link:file.txt[]
+
+**Include a tagged region from a file:**
+
+In the source file:
+
+----
+```java
+// tag::my-region[]
+System.out.println("Hello, World!");
+// end::my-region[]
+```
+----
+
+In your AsciiDoc file:
+
+```asciidoc
+\include::path/to/your/file.java[tag=my-region]
+```
+
+which renders:
+```asciidoc
+include::./file.java[tag=my-region]
+```
+
+View link:file.java[]
