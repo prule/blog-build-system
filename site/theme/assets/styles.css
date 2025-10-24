@@ -6,6 +6,8 @@
   --card-background: #ffffff;
   --border-color: #e9ecef;
   --accent-color: #3498db;
+  --primary-color: #3498db;
+  --primary-color-light: #5dade2;
   --header-bg: #2c3e50;
   --header-text: #ffffff;
   --footer-bg-overlay: rgba(44, 62, 80, 0.9);
@@ -31,6 +33,8 @@ body.dark-mode {
   --card-background: #1e1e1e;
   --border-color: rgba(255, 255, 255, 0.15);
   --accent-color: #5dade2;
+  --primary-color: #5dade2;
+  --primary-color-light: #8ecae6;
   --header-bg: #1e2b37;
   --header-text: #ffffff;
   --footer-bg-overlay: rgba(20, 20, 20, 0.9);
@@ -375,7 +379,7 @@ body.dark-mode a.tag {
 }
 
 .series-filter, .tag-filter {
-    background-color: var(--background-secondary);
+    background-color: var(--card-background);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     padding: 0.3rem 0.8rem;
@@ -390,8 +394,13 @@ body.dark-mode a.tag {
 
 .series-filter.active, .tag-filter.active {
     background-color: var(--primary-color);
-    color: #111111; /* Use a dark color for text on active/primary background */
+    color: #ffffff;
     border-color: var(--primary-color);
+}
+
+body.dark-mode .series-filter.active,
+body.dark-mode .tag-filter.active {
+    color: #000000;
 }
 
 #search-input {
@@ -540,7 +549,16 @@ body.dark-mode .article-full .article-meta {
 .back-link {
     display: inline-block;
     margin-top: 2rem;
-    color: var(--accent-color);
+    color: var(--accent-.series-filter, .tag-filter {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+color);
     text-decoration: none;
     font-weight: 600;
 }
