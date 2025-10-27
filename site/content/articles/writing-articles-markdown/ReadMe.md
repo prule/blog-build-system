@@ -12,3 +12,13 @@ Use triple backticks to create code blocks, and specify the language for syntax 
 console.log('Hello, World!');
 ```
 ----
+
+## Mermaid diagrams
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```

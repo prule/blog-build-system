@@ -1,7 +1,11 @@
-import { cpSync, readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
+import { readdirSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { join, basename, dirname, relative } from 'path';
 import * as showdown from 'showdown';
 import asciidoctor, {Asciidoctor} from "asciidoctor";
+import { deflateSync } from 'zlib';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const kroki = require('asciidoctor-kroki');
 
 interface Metadata {
     title: string;
@@ -33,6 +37,7 @@ export class ArticleProcessor implements Processor {
         this.path = path;
         this.dist = dist;
         this.asciidoctor = asciidoctor();
+        kroki.register(this.asciidoctor.Extensions);
     }
 
     run() {
@@ -45,7 +50,20 @@ export class ArticleProcessor implements Processor {
      */
     transform() {
         console.log('Transforming articles...');
-        const markdownConverter = new showdown.Converter();
+
+        const mermaidShowdownExtension = {
+            type: 'output' as const,
+            regex: /<pre><code class="mermaid language-mermaid">([\s\S]+?)<\/code><\/pre>/g,
+            replace: (_: string, mermaidCode: string): string => {
+                const unescapedCode = mermaidCode.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                const compressed = deflateSync(unescapedCode);
+                const encoded = compressed.toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
+                const krokiUrl = `https://kroki.io/mermaid/svg/${encoded}`;
+                return `<img src="${krokiUrl}" alt="Mermaid diagram"/>`;
+            }
+        };
+
+        const markdownConverter = new showdown.Converter({ extensions: [mermaidShowdownExtension] });
 
         this.findAndTransform(this.dist, file => {
             if (basename(file) === 'ReadMe.md' || basename(file) === 'ReadMe.adoc') {

@@ -71,3 +71,14 @@ include::./file.java[tag=my-region]
 ```
 
 View link:file.java[]
+
+## Mermaid diagrams
+
+[mermaid]
+....
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+....
