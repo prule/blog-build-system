@@ -19,7 +19,7 @@ export class LaunchProcessor implements Processor {
 
     run() {
         console.log('Processing launch page...');
-        const launchPageTemplatePath = join(this.theme, 'launch-page.hbs');
+        const launchPageTemplatePath = join(this.theme, 'launch-page.html');
         const launchPageTemplate = readFileSync(launchPageTemplatePath, 'utf-8');
 
 
