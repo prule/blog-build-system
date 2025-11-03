@@ -12,12 +12,12 @@
         <section id="articles">
             <div class="section-header">
                 <h2>Recent Articles</h2>
-                <a href="/articles/archive.html" class="view-all-link">View All</a>
+                <a href="{{base}}/articles/archive.html" class="view-all-link">View All</a>
             </div>
             <div id="articles-container">
                 {{#articles}}
                     <article class="article">
-                        <a href="{{path}}" class="article-link-wrapper">
+                        <a href="{{base}}/{{path}}" class="article-link-wrapper">
                         <div class="article-image-container">
                             {{#image}}
                             <img src="{{image}}" alt="{{title}}" class="article-image">
@@ -31,14 +31,14 @@
                         <div class="article-summary">
                             <div class="tag-list">
                                 {{#series}}
-                                <a href="/articles/archive.html?series={{series}}" class="series-tag">{{series}}</a>
+                                <a href="{{base}}/articles/archive.html?series={{series}}" class="series-tag">{{series}}</a>
                                 {{/series}}
                                 {{#tags}}
-                                <a href="/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
+                                <a href="{{base}}/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
                                 {{/tags}}
                             </div>
                             <p>{{{summary}}}...</p>
-                            <a href="{{path}}" class="article-link-wrapper">
+                            <a href="{{base}}/{{path}}" class="article-link-wrapper">
                             <span class="read-more">Read More &rarr;</span>
                             </a>
                         </div>
@@ -51,7 +51,7 @@
         <section id="notes">
             <div class="section-header">
                 <h2>Notes</h2>
-                <a href="/notes/archive.html" class="view-all-link">View All</a>
+                <a href="{{base}}/notes/archive.html" class="view-all-link">View All</a>
             </div>
             <div id="notes-container">
                 {{#notes}}

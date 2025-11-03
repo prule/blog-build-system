@@ -1,5 +1,5 @@
 {
   "content": "./content",
   "theme": "./theme",
-  "dist": "./dist"
+  "dist": "../dist/programming"
 }

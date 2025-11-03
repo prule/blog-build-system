@@ -9,6 +9,7 @@ yarn-error.log*
 .pnp.js
 
 .vscode/*
-/site/dist/
+/programming/dist/
 /dist/
 /dist/
+/sites/dist/

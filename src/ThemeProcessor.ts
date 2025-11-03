@@ -29,12 +29,14 @@ interface NotesIndexData {
 export class ThemeProcessor implements Processor {
     private readonly theme: string;
     private readonly dist: string;
+    private readonly base: string;
     private readonly siteConfiguration: SiteConfiguration;
 
-    constructor(theme: string, dist: string, siteConfiguration: SiteConfiguration) {
+    constructor(theme: string, dist: string, siteConfiguration: SiteConfiguration, base: string) {
         this.theme = theme;
         this.dist = dist;
         this.siteConfiguration = siteConfiguration;
+        this.base = base;
     }
 
     run() {
@@ -105,7 +107,8 @@ export class ThemeProcessor implements Processor {
                 tagsJson: JSON.stringify(article.tags) // Pass tags as a JSON string for client-side filtering
             })),
             tags: allTags,
-            series: allSeries
+            series: allSeries,
+            base: this.base
         };
 
         const output = Mustache.render(archiveTemplate, view, partials);
@@ -140,6 +143,7 @@ export class ThemeProcessor implements Processor {
                 ...note,
                 modifiedDate: new Date(note.modifiedDate).toDateString()
             })),
+            base: this.base
         };
 
         const output = Mustache.render(archiveTemplate, view, partials);
@@ -199,7 +203,8 @@ export class ThemeProcessor implements Processor {
         const view = {
             site: this.siteConfiguration,
             articles: recentArticles,
-            notes: recentNotes
+            notes: recentNotes,
+            base: this.base
         };
 
         const output = Mustache.render(indexTemplate, view, partials);
@@ -236,7 +241,8 @@ export class ThemeProcessor implements Processor {
                         site: this.siteConfiguration,
                         date: new Date(metadata.date).toDateString(),
                         modifiedDate: new Date(metadata.modifiedDate).toDateString(),
-                        content: articleContent
+                        content: articleContent,
+                        base: this.base
                     };
                     console.log(`Theming ${view.meta.title}`);
 

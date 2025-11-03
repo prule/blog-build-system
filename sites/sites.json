@@ -1,0 +1,8 @@
+{
+  "includeLaunchPage": true,
+  "sites": [
+    {
+      "path": "programming"
+    }
+  ]
+}

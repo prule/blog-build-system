@@ -14,16 +14,16 @@
         <div class="article-meta-container">
             <p class="article-meta">{{modifiedDate}}</p>
             <div class="tag-list">
-                <a href="/articles/archive.html?series={{meta.series}}" class="series-tag">{{meta.series}}</a>
+                <a href="{{base}}/articles/archive.html?series={{meta.series}}" class="series-tag">{{meta.series}}</a>
                 {{#meta.tags}}
-                <a href="/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
+                <a href="{{base}}/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
                 {{/meta.tags}}
             </div>
         </div>
         <div class="article-body">
             {{{content}}}
         </div>
-        <a href="/articles/archive.html" class="back-link">Back to Archive</a>
+        <a href="{{base}}/articles/archive.html" class="back-link">Back to Archive</a>
     </main>
 </div>
 

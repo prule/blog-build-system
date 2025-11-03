@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "serve": "http-server site/dist"
+    "serve": "http-server sites/dist"
   },
   "dependencies": {
     "asciidoctor": "^3.0.4",

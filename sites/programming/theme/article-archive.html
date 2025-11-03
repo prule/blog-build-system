@@ -47,20 +47,20 @@
 
                 <article class="article" data-tags='{{tagsJson}}' data-series="{{series}}">
                     <div class="article-summary">
-                        <a href="{{path}}" class="article-link-wrapper">
+                        <a href="{{base}}/{{path}}" class="article-link-wrapper">
                         <h3>{{title}}</h3>
                         <p class="article-meta">{{modifiedDate}}</p>
                         </a>
                         <div class="tag-list">
                             {{#series}}
-                            <a href="/articles/series.html?series={{series}}" class="series-tag">{{series}}</a>
+                            <a href="{{base}}/articles/series.html?series={{series}}" class="series-tag">{{series}}</a>
                             {{/series}}
                             {{#tags}}
-                            <a href="/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
+                            <a href="{{base}}/articles/archive.html?tag={{.}}" class="tag">{{.}}</a>
                             {{/tags}}
                         </div>
                         <p>{{{summary}}}...</p>
-                        <a href="{{path}}" class="article-link-wrapper">
+                        <a href="{{base}}/{{path}}" class="article-link-wrapper">
                             <span class="read-more">Read More &rarr;</span>
                         </a>
                     </div>

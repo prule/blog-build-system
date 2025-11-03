@@ -1,27 +1,29 @@
-import {readFileSync} from 'fs';
-import {join, resolve} from 'path';
 import yargs from 'yargs';
 import {hideBin} from 'yargs/helpers';
-import {ContentProcessor} from './ContentProcessor';
-import {ThemeProcessor} from "./theme";
-import {ArticleProcessor} from "./ArticleProcessor";
-import {NotesProcessor} from "./NotesProcessor";
+import {SiteProcessor} from "./SiteProcessor";
+import {readFileSync} from 'fs';
+import {join, resolve} from 'path';
 
 /**
- * Build configuration looks like this:
+ * ```json5
  * {
- *   "content": "./content",
- *   "theme": "./theme",
- *   "dist": "./dist"
+ *   "includeLaunchPage": true,
+ *   "sites": [
+ *     {
+ *       "path": "programming"
+ *     }
+ *   ]
  * }
+ * ```
  */
-interface BuildConfiguration {
-    content: string;
-    theme: string;
-    dist: string;
+interface SitesConfiguration {
+    includeLaunchPage: string;
+    sites: Array<SiteConfiguration>;
 }
 
-console.log('Build configuration');
+interface SiteConfiguration {
+    path: string
+}
 
 // Set up yargs to parse command-line arguments
 const argv = yargs(hideBin(process.argv))
@@ -33,61 +35,26 @@ const argv = yargs(hideBin(process.argv))
     })
     .parseSync();
 
-function loadBuildConfiguration(baseDir: string) {
+const baseDir = resolve(argv['base'] as string);
+console.log('Using base directory:', baseDir);
+
+// read baseDir/sites.json to find all the sites to process
+
+function loadSitesConfiguration(baseDir: string) {
     // Construct the absolute path to the configuration file
-    const configPath = join(baseDir, 'build-configuration.json');
+    const configPath = join(baseDir, 'sites.json');
 
     // Read the file's contents into a string
     const configFile = readFileSync(configPath, 'utf-8');
 
     // Parse the JSON string into a JavaScript object with our defined type
-    const config: BuildConfiguration = JSON.parse(configFile);
+    const config: SitesConfiguration = JSON.parse(configFile);
     return config;
 }
 
-function loadSiteConfiguration(baseDir: string) {
-    // Construct the absolute path to the configuration file
-    const configPath = join(baseDir, 'site.json');
+const sitesConfiguration = loadSitesConfiguration(baseDir);
 
-    // Read the file's contents into a string
-    const configFile = readFileSync(configPath, 'utf-8');
-
-    // Parse the JSON string into a JavaScript object with our defined type
-    const config: SiteConfiguration = JSON.parse(configFile);
-    return config;
-}
-
-try {
-    const baseDir = resolve(argv['base'] as string);
-    console.log('Using base directory:', baseDir);
-    const buildConfiguration = loadBuildConfiguration(baseDir);
-    const siteConfiguration = loadSiteConfiguration(baseDir);
-
-    console.log('Successfully loaded configuration:', buildConfiguration);
-
-    // Process content
-    const processors: Processor[] = [
-        new ContentProcessor(
-            join(baseDir, buildConfiguration.content),
-            join(baseDir, buildConfiguration.dist)
-        ),
-        new ArticleProcessor(
-            join(baseDir, buildConfiguration.content, "articles"),
-            join(baseDir, buildConfiguration.dist)
-        ),
-        new NotesProcessor(
-            join(baseDir, buildConfiguration.content, "notes"),
-            join(baseDir, buildConfiguration.dist)
-        ),
-        new ThemeProcessor(
-            join(baseDir, buildConfiguration.theme),
-            join(baseDir, buildConfiguration.dist),
-            siteConfiguration
-        )
-    ]
-
-    processors.forEach(processor => processor.run());
-} catch (error) {
-    console.error('Error reading or parsing build-configuration.json:', error);
-    process.exit(1); // Exit with an error code
-}
+sitesConfiguration.sites.forEach(site => {
+    console.log('Processing site:', site);
+    new SiteProcessor().run(join(baseDir, site.path), "/"+site.path);
+});
