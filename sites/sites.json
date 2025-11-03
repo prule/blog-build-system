@@ -2,7 +2,8 @@
   "includeLaunchPage": true,
   "sites": [
     {
-      "path": "programming"
+      "path": "programming",
+      "image": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg"
     }
   ]
 }

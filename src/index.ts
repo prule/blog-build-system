@@ -3,6 +3,7 @@ import {hideBin} from 'yargs/helpers';
 import {SiteProcessor} from "./SiteProcessor";
 import {readFileSync} from 'fs';
 import {join, resolve} from 'path';
+import {LaunchProcessor} from "./LaunchProcessor";
 
 /**
  * ```json5
@@ -16,13 +17,14 @@ import {join, resolve} from 'path';
  * }
  * ```
  */
-interface SitesConfiguration {
+export interface SitesConfiguration {
     includeLaunchPage: string;
     sites: Array<SiteConfiguration>;
 }
 
-interface SiteConfiguration {
-    path: string
+export interface SiteConfiguration {
+    path: string,
+    image: string
 }
 
 // Set up yargs to parse command-line arguments
@@ -58,3 +60,5 @@ sitesConfiguration.sites.forEach(site => {
     console.log('Processing site:', site);
     new SiteProcessor().run(join(baseDir, site.path), "/"+site.path);
 });
+
+new LaunchProcessor(join(baseDir, "theme"), join(baseDir, "dist"), sitesConfiguration).run()

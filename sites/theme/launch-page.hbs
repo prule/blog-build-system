@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Launch Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .site {
+            margin: 1em;
+            text-align: center;
+        }
+        .site a {
+            text-decoration: none;
+            color: black;
+        }
+        .site img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .site h2 {
+            margin-top: 0.5em;
+        }
+    </style>
+</head><body>
+    {{#sites}}
+    <div class="site">
+        <a href="/{{path}}">
+            <img src="{{image}}" alt="{{path}}"/>
+            <h2>{{path}}</h2>
+        </a>
+    </div>
+    {{/sites}}
+</body>
+</html>
