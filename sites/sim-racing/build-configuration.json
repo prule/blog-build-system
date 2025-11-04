@@ -1,0 +1,5 @@
+{
+  "content": "./content",
+  "theme": "./theme",
+  "dist": "../dist/sim-racing"
+}
