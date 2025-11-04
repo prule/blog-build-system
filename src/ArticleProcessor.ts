@@ -63,7 +63,22 @@ export class ArticleProcessor implements Processor {
             }
         };
 
-        const markdownConverter = new showdown.Converter({ extensions: [mermaidShowdownExtension] });
+        const youtubeShowdownExtension = {
+            type: 'output' as const,
+            regex: /<p><a href="https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([-\w]+)">https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)[-\w]+<\/a><\/p>/g,
+            replace: (match: string, videoId: string): string => {
+                return `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+                    <iframe 
+                        src="https://www.youtube.com/embed/${videoId}" 
+                        frameborder="0" 
+                        allowfullscreen 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    </iframe>
+                </div>`;
+            }
+        };
+
+        const markdownConverter = new showdown.Converter({ extensions: [mermaidShowdownExtension, youtubeShowdownExtension] });
 
         this.findAndTransform(this.dist, file => {
             if (basename(file) === 'ReadMe.md' || basename(file) === 'ReadMe.adoc') {
@@ -76,6 +91,16 @@ export class ArticleProcessor implements Processor {
                 } else {
                     const options = { safe: 'safe', base_dir: dirname(file) };
                     html = this.asciidoctor.convert(content, options) as string;
+                    html = html.replace(/<div class="paragraph">\n<p><a href="https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([-\w]+)" class="bare">https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)[-\w]+<\/a><\/p>\n<\/div>/g, (match: string, videoId: string): string => {
+                        return `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+                                    <iframe 
+                                        src="https://www.youtube.com/embed/${videoId}" 
+                                        frameborder="0" 
+                                        allowfullscreen 
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                    </iframe>
+                                </div>`;
+                    });
                 }
 
                 const newPath = join(dirname(file), 'ReadMe.html');
