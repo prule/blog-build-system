@@ -3,38 +3,35 @@
 <head>
     <title>Launch Page</title>
     <style>
-        body {
-            font-family: 'Helvetica Neue', sans-serif;
+        body, html {
+            height: 100%;
             margin: 0;
-            background-color: #eef0f2;
-            color: #333;
+            font-family: 'Helvetica Neue', sans-serif;
         }
-        .hero {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-        .hero img {
+        .bg-image {
+            background-image: url("https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg");
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: fixed;
             width: 100%;
-            height: 400px;
-            object-fit: cover;
+            z-index: -1;
         }
-        .hero-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 2rem;
-            border-radius: 10px;
+        .content {
+            color: white;
+            text-align: center;
+            padding-top: 50px;
         }
         .hero-text h1 {
-            font-size: 4rem;
-            margin: 0;
+            font-size: 5rem;
+            margin-bottom: 0;
         }
         .hero-text p {
-            font-size: 1.5rem;
-            margin: 0.5rem 0 0;
+            font-size: 2rem;
+            margin-top: 0;
         }
         .sites-container {
             display: flex;
@@ -42,59 +39,51 @@
             justify-content: center;
             padding: 2rem;
         }
-        .site {
-            margin: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        .site:hover {
-            transform: scale(1.05);
-        }
         .site a {
-            position: relative;
             display: block;
+            margin: 1.5rem;
             text-decoration: none;
             color: white;
+            transition: transform 0.3s ease;
+        }
+        .site a:hover {
+            transform: scale(1.05);
         }
         .site img {
             width: 250px;
             height: 250px;
             object-fit: cover;
+            border: 5px solid white;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: block;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .site h2 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            padding: 1rem;
+            margin-top: 1rem;
             font-size: 1.5rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-            border-radius: 0 0 15px 15px;
-            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <img src="https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg" alt="Nature Hero Image">
+
+    <div class="bg-image"></div>
+
+    <div class="content">
         <div class="hero-text">
             <h1>Welcome</h1>
             <p>Discover our collection of sites</p>
         </div>
+
+        <div class="sites-container">
+            {{#sites}}
+            <div class="site">
+                <a href="/{{path}}">
+                    <img src="{{image}}" alt="{{path}}">
+                    <h2>{{path}}</h2>
+                </a>
+            </div>
+            {{/sites}}
+        </div>
     </div>
 
-    <div class="sites-container">
-        {{#sites}}
-        <div class="site">
-            <a href="/{{path}}">
-                <img src="{{image}}" alt="{{path}}">
-                <h2>{{path}}</h2>
-            </a>
-        </div>
-        {{/sites}}
-    </div>
 </body>
 </html>

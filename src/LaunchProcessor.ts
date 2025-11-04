@@ -1,5 +1,5 @@
 import {join} from "path";
-import {readFileSync, writeFileSync} from "fs";
+import {cpSync, readFileSync, writeFileSync} from "fs";
 import {SitesConfiguration} from "./index";
 import Mustache from "mustache";
 
@@ -39,6 +39,8 @@ export class LaunchProcessor implements Processor {
         const output = Mustache.render(launchPageTemplate, view);
         const outputPath = join(this.dist, 'index.html');
         writeFileSync(outputPath, output);
+
+        cpSync(join(this.theme, "assets"), join(this.dist,"assets"), { recursive: true });
 
         console.log('Launch page processed successfully.');
     }
