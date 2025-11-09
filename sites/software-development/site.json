@@ -1,6 +1,7 @@
 {
-  "title": "My New Blog",
-  "subTitle": "A place for my thoughts and ideas.",
+  "title": "Software Development by Paul",
+  "subTitle": "A place for my thoughts and ideas about software development",
+  "headerImage": "https://images.pexels.com/photos/1910225/pexels-photo-1910225.jpeg",
   "socials": [
     {
       "icon": "github",
