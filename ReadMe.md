@@ -33,115 +33,137 @@ This command generates the static website from your content and theme.
 The base parameter specifies where your site data is. 
 
 ```shell
-node dist/index.js --base=./site
+node dist/index.js --base=./sites
 ```
 
 In the sample the site directory looks like this:
 
 ```text
-site
-├── build-configuration.json
-├── site.json
-│
-├── content
-│   ├── articles
-│   │   ├── gradle-shared-config
-│   │   │   ├── ReadMe.md
-│   │   │   └── metadata.json
-│   │   ├── json5
-│   │   │   ├── Intellij-support-for-json5.png
-│   │   │   ├── ReadMe.adoc
-│   │   │   ├── metadata.json
-│   │   │   ├── renovate.json5
-│   │   │   ├── sample-javascript-json5.js
-│   │   │   ├── sample-typescript-json5.ts
-│   │   │   ├── sample-without-comments.json5
-│   │   │   ├── sample.json
-│   │   │   └── sample.json5
-│   │   ├── renovate
-│   │   │   ├── ReadMe.adoc
-│   │   │   ├── github-build.png
-│   │   │   ├── gradle.yml
-│   │   │   ├── metadata.json
-│   │   │   ├── renovate-dashboard-detail.png
-│   │   │   ├── renovate-dashboard.png
-│   │   │   ├── renovate.json5
-│   │   │   ├── series.txt
-│   │   │   └── tags.txt
-│   │   └── sdkman
-│   │       ├── ReadMe.adoc
-│   │       ├── intellij-sdkman-support.png
-│   │       ├── metadata.json
-│   │       ├── sdk-list-java.txt
-│   │       └── sdk-list.txt
-│   └── notes
-│       └── 0001.md
-│
+sites
 ├── dist
-│   ├── articles
-│   │   ├── archive.html
-│   │   ├── gradle-shared-config
-│   │   │   ├── ReadMe.html
-│   │   │   ├── index.html
-│   │   │   └── metadata.json
-│   │   ├── json5
-│   │   │   ├── Intellij-support-for-json5.png
-│   │   │   ├── ReadMe.html
-│   │   │   ├── index.html
-│   │   │   ├── metadata.json
-│   │   │   ├── renovate.json5
-│   │   │   ├── sample-javascript-json5.js
-│   │   │   ├── sample-typescript-json5.ts
-│   │   │   ├── sample-without-comments.json5
-│   │   │   ├── sample.json
-│   │   │   └── sample.json5
-│   │   ├── renovate
-│   │   │   ├── ReadMe.html
-│   │   │   ├── github-build.png
-│   │   │   ├── gradle.yml
-│   │   │   ├── index.html
-│   │   │   ├── metadata.json
-│   │   │   ├── renovate-dashboard-detail.png
-│   │   │   ├── renovate-dashboard.png
-│   │   │   ├── renovate.json5
-│   │   │   ├── series.txt
-│   │   │   └── tags.txt
-│   │   └── sdkman
-│   │       ├── ReadMe.html
-│   │       ├── index.html
-│   │       ├── intellij-sdkman-support.png
-│   │       ├── metadata.json
-│   │       ├── sdk-list-java.txt
-│   │       └── sdk-list.txt
-│   ├── articles.json
 │   ├── assets
-│   │   ├── code-theme.css
-│   │   ├── hljs-base-theme.css
-│   │   ├── profile.png
-│   │   ├── styles.css
-│   │   └── theme.js
+│   │   └── ...
 │   ├── index.html
-│   ├── notes
-│   │   ├── 0001.md
-│   │   └── archive.html
-│   ├── notes.json
-│   ├── pages
-│   └── series
-│       └── index.html
-│
+│   ├── sample-site
+│   │   ├── articles
+│   │   │   └── archive.html
+│   │   ├── articles.json
+│   │   ├── assets
+│   │   │   └── ...
+│   │   ├── index.html
+│   │   ├── notes
+│   │   │   └── archive.html
+│   │   └── notes.json
+│   └── software-development
+│       ├── articles
+│       │   ├── archive.html
+│       │   ├── gradle-shared-config
+│       │   │   ├── ReadMe.html
+│       │   │   ├── index.html
+│       │   │   └── metadata.json
+│       │   ├── json5
+│       │   │   ├── Intellij-support-for-json5.png
+│       │   │   ├── ReadMe.html
+│       │   │   ├── index.html
+│       │   │   ├── metadata.json
+│       │   │   ├── renovate.json5
+│       │   │   ├── sample-javascript-json5.js
+│       │   │   ├── sample-typescript-json5.ts
+│       │   │   ├── sample-without-comments.json5
+│       │   │   ├── sample.json
+│       │   │   └── sample.json5
+│       │   ├── renovate
+│       │   │   ├── ReadMe.html
+│       │   │   ├── github-build.png
+│       │   │   ├── gradle.yml
+│       │   │   ├── index.html
+│       │   │   ├── metadata.json
+│       │   │   ├── renovate-dashboard-detail.png
+│       │   │   ├── renovate-dashboard.png
+│       │   │   ├── renovate.json5
+│       │   │   ├── series.txt
+│       │   │   └── tags.txt
+│       │   ├── sdkman
+│       │   │   ├── ReadMe.html
+│       │   │   ├── index.html
+│       │   │   ├── intellij-sdkman-support.png
+│       │   │   ├── metadata.json
+│       │   │   ├── sdk-list-java.txt
+│       │   │   └── sdk-list.txt
+│       │   ├── writing-articles-asciidoc
+│       │   │   ├── ReadMe.html
+│       │   │   ├── file.java
+│       │   │   ├── file.txt
+│       │   │   ├── index.html
+│       │   │   └── metadata.json
+│       │   └── writing-articles-markdown
+│       │       ├── ReadMe.html
+│       │       ├── index.html
+│       │       └── metadata.json
+│       ├── articles.json
+│       ├── assets
+│       │   ├── code-theme.css
+│       │   ├── hljs-base-theme.css
+│       │   ├── porsche.webp
+│       │   ├── profile.png
+│       │   ├── styles.css
+│       │   ├── theme.css
+│       │   └── theme.js
+│       ├── index.html
+│       ├── notes
+│       │   ├── 0001.md
+│       │   └── archive.html
+│       ├── notes.json
+│       └── pages
+├── life-hacks
+│   ├── build-configuration.json
+│   ├── content
+│   │   ├── articles
+│   │   └── notes
+│   └── site.json
+├── sim-racing
+│   ├── build-configuration.json
+│   ├── content
+│   │   ├── articles
+│   │   │   └── 001 dude can you even drive
+│   │   │       ├── 1.webp
+│   │   │       ├── ReadMe.md
+│   │   │       └── metadata.json
+│   │   └── notes
+│   └── site.json
+├── sites.json
+├── software-development
+│   ├── build-configuration.json
+│   ├── content
+│   │   ├── articles
+│   │   │   ├── writing-articles-asciidoc
+│   │   │   │   ├── ReadMe.adoc
+│   │   │   │   ├── file.java
+│   │   │   │   ├── file.txt
+│   │   │   │   └── metadata.json
+│   │   │   └── writing-articles-markdown
+│   │   │       ├── ReadMe.md
+│   │   │       └── metadata.json
+│   │   ├── notes
+│   │   │   └── 0001.md
+│   │   └── pages
+│   └── site.json
 └── theme
     ├── article-archive.html
     ├── article.html
     ├── assets
     │   ├── code-theme.css
     │   ├── hljs-base-theme.css
+    │   ├── porsche.webp
     │   ├── profile.png
     │   ├── styles.css
+    │   ├── theme.css
     │   └── theme.js
     ├── footer.html
     ├── head.html
     ├── header.html
     ├── index.html
+    ├── launch-page.html
     └── notes-archive.html
 ```
 
@@ -155,7 +177,27 @@ npm run serve
 
 ## Configuration
 
-The build system is configured through two JSON files: `build-configuration.json` and `site.json`.
+Multiple sites are configured with `sites.json`
+
+```json5
+{
+  "includeLaunchPage": true,
+  "sites": [
+    {
+      "path": "software-development",
+      "image": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg"
+    },
+    {
+      "path": "life-hacks",
+      "image": "https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg"
+    }
+  ]
+}
+```
+
+A launch page is generated that links to each of the individual sites.
+
+Each individual site is configured through two JSON files: `build-configuration.json` and `site.json`.
 
 ### `build-configuration.json`
 
