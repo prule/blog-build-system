@@ -2,12 +2,16 @@
   "includeLaunchPage": true,
   "sites": [
     {
-      "path": "programming",
+      "path": "software-development",
       "image": "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg"
     },
     {
       "path": "sim-racing",
       "image": "/assets/porsche.webp"
+    },
+    {
+      "path": "life-hacks",
+      "image": "https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg"
     }
   ]
 }
