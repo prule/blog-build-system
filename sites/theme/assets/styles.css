@@ -952,3 +952,41 @@ body.dark-mode :not(pre) > code {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
+
+/* Hamburger Menu */
+#menu-toggle {
+    display: none; /* Hidden by default */
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    #menu-toggle {
+        display: block; /* Show on small screens */
+        z-index: 1001;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+    }
+
+    .main-nav a {
+        /*padding: 1rem;*/
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-open .main-nav {
+        display: flex;
+    }
+}
