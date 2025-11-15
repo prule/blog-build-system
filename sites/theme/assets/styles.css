@@ -847,7 +847,9 @@ body.dark-mode :not(pre) > code {
 }
 
 .main-header .header-content p {
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    /*font-size: clamp(1.2rem, 2.5vw, 1.5rem);*/
+    /*font-size: clamp(1.0rem, 2.0vw, 1.4rem);*/
+    font-size: 1rem;
     transition: .4s linear;
 }
 
@@ -863,7 +865,8 @@ body.dark-mode :not(pre) > code {
 }
 
 .main-header .header-content h1 {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    /*font-size: clamp(2.5rem, 5vw, 3.5rem);*/
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     padding: 0;
     transition: .4s linear;
 }
