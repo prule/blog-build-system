@@ -61,4 +61,4 @@ sitesConfiguration.sites.forEach(site => {
     new SiteProcessor().run(join(baseDir, site.path), "/"+site.path);
 });
 
-new LaunchProcessor(join(baseDir, "themes/theme"), join(baseDir, "dist"), sitesConfiguration, baseDir).run()
+new LaunchProcessor(join(baseDir, "themes/theme1"), join(baseDir, "dist"), sitesConfiguration, baseDir).run()
