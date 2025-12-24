@@ -1,5 +1,15 @@
 ## Writing Articles using Asciidoc
-
+////
+{
+  "title": "Writing articles with Asciidoc",
+  "subTitle": "Asciidoc article tips",
+  "date": "2025-10-24",
+  "modifiedDate": "2025-10-24",
+  "series": "blog-build-system",
+  "tags": ["blog-build-system"],
+  "image": "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg"
+}
+////
 ### Code Blocks
 
 Use four hyphens to create code blocks, and specify the language and title.
@@ -52,21 +62,21 @@ View link:file.txt[]
 In the source file:
 
 ----
-```java
 // tag::my-region[]
 System.out.println("Hello, World!");
 // end::my-region[]
-```
 ----
 
 In your AsciiDoc file:
 
-```asciidoc
-\include::path/to/your/file.java[tag=my-region]
+----
+```java
+\include::./file.java[tag=my-region]
 ```
+----
 
 which renders:
-```asciidoc
+```java
 include::./file.java[tag=my-region]
 ```
 
