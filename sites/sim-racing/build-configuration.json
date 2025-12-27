@@ -1,5 +1,5 @@
 {
   "content": "./content",
-  "theme": "../themes/theme1",
+  "theme": "../themes/clean",
   "dist": "../dist/sim-racing"
 }

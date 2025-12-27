@@ -15,5 +15,11 @@
       "icon": "x-twitter",
       "url": "https://x.com/prule"
     }
+  ],
+  "nav": [
+    {
+      "path": "pages/about.html",
+      "title": "About"
+    }
   ]
 }

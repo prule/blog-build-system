@@ -63,12 +63,23 @@ export class SiteProcessor {
                     ),
                     new ArticleProcessor(
                         join(baseDir, buildConfiguration.content, "articles"),
-                        join(baseDir, buildConfiguration.dist)
+                        join(baseDir, buildConfiguration.dist),
+                        "articles"
                     ),
-                    new NotesProcessor(
-                        join(baseDir, buildConfiguration.content, "notes"),
-                        join(baseDir, buildConfiguration.dist)
-                    ),
+                new ArticleProcessor(
+                    join(baseDir, buildConfiguration.content, "pages"),
+                    join(baseDir, buildConfiguration.dist),
+                    "pages"
+                ),
+                new ArticleProcessor(
+                    join(baseDir, buildConfiguration.content, "notes"),
+                    join(baseDir, buildConfiguration.dist),
+                    "notes"
+                ),
+                    // new NotesProcessor(
+                    //     join(baseDir, buildConfiguration.content, "notes"),
+                    //     join(baseDir, buildConfiguration.dist)
+                    // ),
                     new ThemeProcessor(
                         join(baseDir, buildConfiguration.theme),
                         join(baseDir, buildConfiguration.dist),
